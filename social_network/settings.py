@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,9 +88,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         "HOST": os.getenv("DB_HOST", 'localhost'),
-        'NAME': os.getenv("DB_DATABASE", 'bookstore'),
+        'NAME': os.getenv("DB_DATABASE", 'social_networking'),
         'USER': os.getenv("DB_USERNAME", 'root'),
-        'PASSWORD': os.getenv("DB_PASSWORD", ''),
+        'PASSWORD': os.getenv("DB_PASSWORD", '4562'),
         'PORT': os.getenv("DB_PORT", '3306')
     }
 }
