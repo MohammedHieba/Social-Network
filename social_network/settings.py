@@ -35,6 +35,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'posts',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,7 +89,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         "HOST": os.getenv("DB_HOST", 'localhost'),
-        'NAME': os.getenv("DB_DATABASE", 'bookstore'),
+        'NAME': os.getenv("DB_DATABASE", 'social_network'),
         'USER': os.getenv("DB_USERNAME", 'root'),
         'PASSWORD': os.getenv("DB_PASSWORD", ''),
         'PORT': os.getenv("DB_PORT", '3306')
@@ -138,3 +140,4 @@ STATIC_ROOT = '/tmp/django/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
