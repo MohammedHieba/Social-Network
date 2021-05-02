@@ -1,0 +1,71 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}
+    Profile Info
+{% endblock %}
+
+{% block body %}
+
+    <div class="form-group m-auto">
+        {% if user_form.errors %}
+            {% for field in user_form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in user_form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <form action="{% url 'edit' user.id %}" method="POST">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+{#        <div class="form-group">#}
+{#            <label for="id_username">Username:</label>#}
+{#            <input type="text" name="username" maxlength="150" class="form-control" value="{{ user.username }}"#}
+{#                autocapitalize="none" autocomplete="username" required id="id_username">#}
+{#        </div>#}
+{#        <input type="email" name="email" value="{{ user_form.email.value }}" maxlength="254" required="" id="id_email">#}
+{#        <input type="text" name="firstname" value="{{ user_form.first_name.value }}" maxlength="254" required="" id="id_firstname">#}
+{#        <input type="text" name="lastname" value="{{ user_form.last_name.value }}" maxlength="254" required="" id="id_lastname">#}
+
+
+{#                <div class="form-group">#}
+{#            <label for="id_password1">Password:</label>#}
+{#            <input type="password" name="password1" class="form-control"#}
+{#               autocomplete="new-password" id="id_password1">#}
+{#            <div id="passwordHelpBlock" class="form-text">#}
+{#              <small>#}
+{#                  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.#}
+{#              </small>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="form-group">#}
+{#            <label for="id_password2">Password Confirmation:</label>#}
+{#            <input type="password" name="password2" class="form-control"#}
+{#               autocomplete="new-password" id="id_password2">#}
+{#              <small>#}
+{#                  Confirmation Password must be the same.#}
+{#              </small>#}
+{#        </div>#}
+        <div class="form-group w-25">
+            <label for="id_gender">Gender:</label>
+            <input type="text" name="date_of_birth" class="form-control" disabled
+                    id="id_gender" value="{{ user.profile.gender }}">
+        </div>
+
+        <div class="form-group w-25">
+            <label for="id_date_of_birth">Date Of Birth:</label>
+            <input type="text" name="date_of_birth" class="form-control" disabled
+                   id="id_date_of_birth" max="2011-12-30" value="{{ user.profile.date_of_birth }}">
+        </div>
+        <button class="btn btn-primary" type="submit">Update</button>
+    </form>
+{% endblock %}
+

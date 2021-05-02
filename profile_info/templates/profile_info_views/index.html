@@ -1,0 +1,17 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}
+    Profile Info
+{% endblock %}
+
+{% block body %}
+
+    {{ user.username }}
+    {{ user.profile.gender }}
+    {{ user.profile.date_of_birth }}
+    <a class="btn btn-success" href="{% url 'edit' user.id %}">Edit</a>
+    <a class="btn btn-info" href="{% url 'edit_pass' user.id %}">Change Password</a>
+    <a class="btn btn-info" href="{% url 'logout' %}">Logout</a>
+
+{% endblock %}
+
