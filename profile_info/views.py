@@ -7,7 +7,7 @@ from .forms import ProfileForm, SignUpForm, EditProfileForm, EditPassForm
 from .models import Profile
 
 
-def register(request):
+def signup(request):
     print("IN REGISTER")
     form = SignUpForm(request.POST or None)
     profile = ProfileForm(request.POST or None)
@@ -27,29 +27,6 @@ def register(request):
         "profile": profile,
     })
 
-
-def signup(request):
-    form = UserCreationForm(request.POST or None)
-    profile = ProfileForm(request.POST or None)
-    if form.is_valid() and profile.is_valid():
-        form.save()
-        print("CLEANED DATA: ", form.cleaned_data)
-        username = form.cleaned_data.get("username")
-        password = form.cleaned_data.get("password1")
-        email = profile.cleaned_data.get("email")
-        print("EMAIL: ", email)
-        user = authenticate(username=username, password=password, email=email)
-        Profile.objects.filter(user=user).update(**profile.cleaned_data)
-        if user:
-            login(request, user)
-            return redirect("profile_index")
-    else:
-        print(profile.errors)
-        print(form.errors)
-    return render(request, "registration/signup.html", {
-        "form": form,
-        "profile": profile,
-    })
 
 
 @login_required
