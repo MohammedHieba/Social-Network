@@ -147,3 +147,7 @@ STATIC_ROOT = '/tmp/django/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# login URL and Login redirection for the posts (just for now before adding the wall)
+LOGIN_REDIRECT_URL = 'posts'
+LOGIN_URL = 'login' 

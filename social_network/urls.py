@@ -21,9 +21,8 @@ import profile_info.views
 urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     path("signup", profile_info.views.signup, name="signup"),
-    path('register/', profile_info.views.register, name='register'),
     path("profile/", include("profile_info.urls")),
-    path('posts/', include("posts.urls")),
+    path('', include("posts.urls")),
     path('admin/', admin.site.urls),
     path("api/", include("api.urls", namespace="API"))
 ]
