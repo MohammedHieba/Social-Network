@@ -9,8 +9,10 @@ media
 # Backup files # 
 *.bak 
 
-# If you are using PyCharm # 
-.idea/**/workspace.xml 
+# If you are using PyCharm #
+.idea
+.idea/social_network.iml
+.idea/**/workspace.xml
 .idea/**/tasks.xml 
 .idea/dictionaries 
 .idea/**/dataSources/ 

@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'accounts',
+    'profile_info.apps.ProfileInfoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,11 +88,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        "HOST": os.getenv("DB_HOST", 'localhost'),
-        'NAME': os.getenv("DB_DATABASE", 'social_networking'),
-        'USER': os.getenv("DB_USERNAME", 'root'),
-        'PASSWORD': os.getenv("DB_PASSWORD", '4562'),
-        'PORT': os.getenv("DB_PORT", '3306')
+        "HOST": os.getenv("DB_HOST"),
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USERNAME"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'PORT': os.getenv("DB_PORT")
     }
 }
 
