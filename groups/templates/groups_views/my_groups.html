@@ -1,0 +1,46 @@
+{% extends "layouts/base.html" %}
+
+{% block styles %}
+    <style>
+        body{
+        background-color: #dbd8d8;
+        }
+        .custom-style{
+        background-color: #dfe6e9 !important;
+        }
+        .border-3 {
+        border-width:3px !important;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    My Groups
+{% endblock %}
+
+{% block content %}
+    <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
+        <div class="mb-4 d-flex justify-content-between">
+            <h2>My Groups:</h2>
+        </div>
+        {% for group in groups %}
+            <div class="card mb-3 mx-auto">
+                <div class="row py-4">
+                    <div class="col-md-4 w-50 m-auto text-center">
+                        <img src="{{ group.group_image.url }}" class="rounded-circle border border-primary border-3"
+                             width="150px" height="150px" alt="group_image">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title">Name: {{ group.name }}</h4>
+                            <p class="card-text">{{ group.description }}</p>
+                            <p class="card-text"><small class="text-muted">{{ group.created_at }}</small></p>
+                            <a class="btn btn-primary" href="{% url 'groups_my_members' group.id %}">Show Members</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

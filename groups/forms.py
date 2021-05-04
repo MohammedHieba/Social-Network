@@ -14,4 +14,4 @@ class CreateGroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = '__all__'
-        exclude = ('created_at',)
+        exclude = ('created_at', 'members')

@@ -29,7 +29,7 @@
         {% endif %}
     </div>
 
-    <form method="POST" action="{% url 'groups_create' %}">
+    <form method="POST" action="{% url 'groups_create' %}" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="bg-light w-50 mx-auto rounded-lg p-4">
