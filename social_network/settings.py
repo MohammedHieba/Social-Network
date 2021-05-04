@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'posts',
     'crispy_forms',
     'accounts',
+    'api.apps.ApiConfig',
+    'rest_framework',
     'profile_info.apps.ProfileInfoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
