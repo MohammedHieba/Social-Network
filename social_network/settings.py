@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
+
+from django.conf.global_settings import DEFAULT_FILE_STORAGE
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,8 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-LOGIN_URL = "/login"
-LOGIN_REDIRECT_URL = "/profile/"
 # LOGOUT_REDIRECT_URL = "/book/"
 
 MIDDLEWARE = [
@@ -87,7 +86,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -101,7 +99,6 @@ DATABASES = {
         'PORT': os.getenv("DB_PORT")
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -121,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -135,13 +131,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
-STATIC_ROOT = '/tmp/django/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -150,4 +139,17 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # login URL and Login redirection for the posts (just for now before adding the wall)
 LOGIN_REDIRECT_URL = 'posts'
-LOGIN_URL = 'login' 
+LOGIN_URL = 'login'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'social_network_static_cdn', 'static_root')
+
+MEDIA_URL = '/media/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static_social_network')
+]
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'social_network_static_cdn', 'media_root')
+DEFAULT_FILE_STORAGE = DEFAULT_FILE_STORAGE
