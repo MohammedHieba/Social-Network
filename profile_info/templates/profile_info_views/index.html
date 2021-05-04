@@ -1,11 +1,11 @@
 {% extends "layouts/main.html" %}
 
 {% block style %}
-        body{
-        background-color: #dbd8d8;
+    body{
+    background-color: #dbd8d8;
     }
     .border-3 {
-        border-width:3px !important;
+    border-width:3px !important;
     }
 {% endblock %}
 {% block title %}
@@ -16,11 +16,11 @@
     <div class="row">
         <div class="col col-md-4 bg-light my-4 p-2 rounded-lg">
             <div class="mt-5">
-                    <img class="rounded-circle border border-primary border-3"
+                <img class="rounded-circle border border-primary border-3"
                      src="{{ user.profile.profile_image.url }}" height="200px" width="200px" alt="profile_pic">
             </div>
         </div>
-        <div class="col col-md-8 bg-light mt-4 p-2 rounded-lg">
+        <div class="col col-md-4 bg-light my-4 p-2 rounded-lg">
             <div class="pt-5 mt-5">
                 <h2 class="text-primary">Profile Info: </h2>
                 <div class="d-flex align-items-center">
@@ -53,6 +53,25 @@
                     <a class="btn btn-info" href="{% url 'logout' %}">Logout</a>
                 </div>
             </div>
+        </div>
+        <div class="col col-md-4 bg-light my-4 p-2 rounded-lg">
+            <form method="GET" action="">
+                <div class="p-2">
+                    {{ filter.form }}
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                        </svg>
+                        Search
+                    </button>
+                </div>
+                <div class="p-2">
+                    {% for user in users %}
+                        <h5><a href="" class="d-block">{{ user.username }}</a></h5>
+                    {% endfor %}
+                </div>
+            </form>
         </div>
     </div>
 

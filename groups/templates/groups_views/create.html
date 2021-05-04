@@ -1,0 +1,48 @@
+{% extends "layouts/main.html" %}
+
+{% block style %}
+    body{
+    background-color: #dbd8d8;
+    }
+{% endblock %}
+
+{% block title %}
+    All Groups
+{% endblock %}
+
+{% block body %}
+
+    <div class="my-2">
+        {% if group_from.errors %}
+            {% for field in group_from %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ field.label }}: {{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in group_from.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <form method="POST" action="{% url 'groups_create' %}">
+        {% csrf_token %}
+
+        <div class="bg-light w-50 mx-auto rounded-lg p-4">
+            {% for field in group_from.visible_fields %}
+                <div class="form-group mx-auto">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <div class="w-50 mx-auto">
+                <button class="btn btn-success w-100" type="submit">Create</button>
+            </div>
+        </div>
+
+    </form>
+{% endblock %}

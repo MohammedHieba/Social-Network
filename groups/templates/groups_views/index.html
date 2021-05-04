@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% block style %}
+    body{
+    background-color: #dbd8d8;
+    }
+    .custom-style{
+        background-color: #dfe6e9 !important;
+    }
+{% endblock %}
+
+{% block title %}
+    All Groups
+{% endblock %}
+
+{% block body %}
+    <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
+        <div  class="mb-4 d-flex justify-content-between">
+            <h2>Groups:</h2>
+            <a href="{% url 'groups_create' %}" class="btn btn-primary pt-2" >Create Group</a>
+        </div>
+
+        <div class="card mb-3 mx-auto">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="..." alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <button class="btn btn-info w-25">Join</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+

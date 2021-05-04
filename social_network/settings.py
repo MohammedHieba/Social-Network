@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'accounts',
     'api.apps.ApiConfig',
     'rest_framework',
+    'groups',
+    'django_filters',
     'profile_info.apps.ProfileInfoConfig',
     'django.contrib.admin',
     'django.contrib.auth',

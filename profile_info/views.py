@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import ProfileForm, SignUpForm, EditProfileForm, EditPassForm, ProfileImage
 from .models import Profile
+from .filter import UserFilter
+from .utils import get_index_context
 
 
 def signup(request):
@@ -38,9 +40,8 @@ def signup(request):
 
 @login_required
 def index(request):
-    return render(request, 'profile_info_views/index.html', {
-        "user": request.user
-    })
+    context = get_index_context(request)
+    return render(request, 'profile_info_views/index.html', context)
 
 
 @login_required
