@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +11,9 @@
       integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
       crossorigin="anonymous"
     />
+    {% block stylesheet %}{% endblock stylesheet %}
     <title>{% block title %}{% endblock title %}</title>
+    <script src="https://kit.fontawesome.com/7f1419bc41.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <h3>Hola Amigo, {{request.user}} </h3>
@@ -27,5 +30,7 @@
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
       crossorigin="anonymous"
     ></script>
+    {% block javascript %}
+    {% endblock javascript%}
   </body>
 </html>

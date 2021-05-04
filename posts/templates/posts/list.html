@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %}
+{% block content %}
+
+<div class="card posts-card">
+    <div class="card-body">
+        <div class="form-group">
+            <textarea class="form-control" rows="3" placeholder="What is in your mind?"></textarea>
+        </div>
+        <div class="btn-toolbar justify-content-between">
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Share</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for post in posts %}
+<div class="card posts-card m-2">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="mr-2">
+                    <img class="rounded-circle" width="45"   src="https://picsum.photos/50/50" alt="">
+                </div>
+                <div class="ml-2">
+                    <div class="h5 m-0">@{{request.user}}</div>
+                    <div class="h6 text-muted">{{request.user}}</div>
+                </div>
+            </div>
+            <div>
+                <div class="dropdown">
+                    <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="h6 dropdown-header">Post Control</div>
+                        <a class="dropdown-item" href="#">Edit</a>
+                        <a class="dropdown-item" href="#">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="text-muted h6 mb-2"> <i class="fa fa-clock-o"></i> {{post.created_at}} </div>
+        <p class="card-text">
+            {{post.content}}
+        </p>
+    </div>
+    <div class="card-footer">
+        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+    </div>
+</div>
+{%empty%}
+<h3>Sorry we didn't find any posts</h3>
+<p>Create your first post: <a href=" {% url 'post-create' %} ">Create Now</a></p>
+{% endfor %}
+{% endblock content %}
