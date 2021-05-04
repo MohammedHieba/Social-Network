@@ -15,9 +15,11 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/static_social_network" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (Social-Network)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (social_network)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />
@@ -25,5 +27,13 @@
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
+    <option name="TEMPLATE_FOLDERS">
+      <list>
+        <option value="$MODULE_DIR$/templates" />
+        <option value="$MODULE_DIR$/posts/templates" />
+        <option value="$MODULE_DIR$/notifications/templates" />
+        <option value="$MODULE_DIR$/groups/templates" />
+      </list>
+    </option>
   </component>
 </module>

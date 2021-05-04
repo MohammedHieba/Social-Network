@@ -21,12 +21,13 @@ from django.urls import path, include
 import profile_info.views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path("", include("django.contrib.auth.urls")),
     path("signup", profile_info.views.signup, name="signup"),
     path("profile/", include("profile_info.urls")),
     path("groups/", include("groups.urls")),
     path('posts/', include("posts.urls"), name='posts'),
-    path('admin/', admin.site.urls),
+    path('notifications/', include("notifications.urls")),
     path("api/", include("api.urls", namespace="API"))
 ]
 

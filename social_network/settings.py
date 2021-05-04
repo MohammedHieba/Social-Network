@@ -44,12 +44,20 @@ INSTALLED_APPS = [
     'groups',
     'django_filters',
     'profile_info.apps.ProfileInfoConfig',
+
+    # Built-in applications
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Created applications
+    'chats',
+    'notifications',
+
+    # Third party Applications
 ]
 
 # LOGOUT_REDIRECT_URL = "/book/"
@@ -134,6 +142,15 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Email Configuration
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == "True"
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
