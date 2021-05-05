@@ -6,8 +6,10 @@ from django.urls import reverse_lazy
 from django import forms
 # the model
 from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def PostList(request):
 	return render(request, 'posts/list.html')
 # class PostList(ListView):
@@ -20,12 +22,14 @@ def PostList(request):
 #     fields = ['content']
 #     success_url = reverse_lazy('posts')
 
-class PostUpdate(UpdateView):
-    model = Post
-    fields = ['content']
-    success_url = reverse_lazy('posts')
+class PostUpdate(LoginRequiredMixin,UpdateView):
+	model = Post
+	fields = ['content']
+	success_url = reverse_lazy('posts')
 
-class PostDelete(DeleteView):
+
+
+class PostDelete(LoginRequiredMixin,DeleteView):
 	model = Post
 	context_object_name = 'deleted_post'
 	success_url = reverse_lazy('posts')
