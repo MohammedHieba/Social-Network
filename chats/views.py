@@ -3,11 +3,12 @@ from django.contrib.auth.models import User
 from django.db.models import When, Q, Case, Value, Field, CharField, F
 
 # Create your views here.
+from django.http import HttpResponse, HttpResponseForbidden
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, FormView
 
 from chats.forms import MessageForm
-from chats.models import Chat
+from chats.models import Chat, Message
 
 
 @method_decorator(login_required, name='dispatch')
@@ -28,14 +29,20 @@ class ChatView(FormView):
     def get_success_url(self):
         return '/chats/1'
 
+    def dispatch(self, request, *args, **kwargs):
+        chat = Chat.objects.filter(
+            Q(first_user=self.request.user) | Q(second_user=self.request.user),
+            id=self.kwargs.get('id')).first()
+        if not chat:
+            return HttpResponseForbidden()
+        return super(ChatView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['chat'] = Chat.objects.get(id=self.kwargs.get('id'))
-        # print(context.get('form').fields)
         return context
 
     def form_valid(self, form, *args, **kwargs):
-        # form.cleaned_data['chat'] = Chat.objects.get(id=self.kwargs.get('id'))
-        # form.cleaned_data['by'] = self.request.user
-        # form.save()
+        Message.objects.create(message=form.cleaned_data.get('message'), chat_id=self.kwargs.get('id'),
+                               by=self.request.user)
         return super().form_valid(form)
