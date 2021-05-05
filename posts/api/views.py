@@ -11,11 +11,11 @@ from posts.models import Post
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
-		'List':'/task-list/',
-		'Detail View':'/task-detail/<str:pk>/',
-		'Create':'/task-create/',
-		'Update':'/task-update/<str:pk>/',
-		'Delete':'/task-delete/<str:pk>/',
+		'List':'/post-list/',
+		'Detail View':'/post-detail/<int:pk>/',
+		'Create':'/post-create/',
+		'Update':'/post-update/<int:pk>/',
+		'Delete':'/post-delete/<int:pk>/',
 		}
 
 	return Response(api_urls)

@@ -1,1 +1,13 @@
 {% extends 'base.html' %}
+{% block title %}Delete{% endblock title %}
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="container">
+  <a href="{% url 'posts' %}" class="btn btn-secondary">Back</a>
+  <p>Are you sure you want to delete the following post?</p>
+  <div class="shadow p-3 mb-5 bg-white rounded">{{deleted_post.content}}</div>
+  <input type="submit" value="Delete" class="btn btn-danger" />
+  </div>
+</form>
+{% endblock content %}
