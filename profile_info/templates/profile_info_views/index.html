@@ -1,77 +1,87 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/base.html" %}
 
-{% block style %}
-    body{
-    background-color: #dbd8d8;
-    }
-    .border-3 {
-    border-width:3px !important;
-    }
+{% block styles %}
+    <style>
+        body {
+            background-color: #dbd8d8;
+        }
+
+        .custom-style {
+            background-color: #dfe6e9 !important;
+        }
+
+        .border-3 {
+            border-width: 3px !important;
+        }
+    </style>
 {% endblock %}
+
 {% block title %}
     Profile Info
 {% endblock %}
 
-{% block body %}
-    <div class="row">
-        <div class="col col-md-4 bg-light my-4 p-2 rounded-lg">
-            <div class="mt-5">
-                <img class="rounded-circle border border-primary border-3"
-                     src="{{ user.profile.profile_image.url }}" height="200px" width="200px" alt="profile_pic">
-            </div>
-        </div>
-        <div class="col col-md-4 bg-light my-4 p-2 rounded-lg">
-            <div class="pt-5 mt-5">
-                <h2 class="text-primary">Profile Info: </h2>
-                <div class="d-flex align-items-center">
-                    <h3 class="p-2">Username: </h3>
-                    <h5 class="p-2">{{ user.username }}</h5>
-                </div>
-                <div class="d-flex align-items-center">
-                    <h3 class="p-2">First Name: </h3>
-                    <h5 class="p-2">{{ user.first_name }}</h5>
-                </div>
-                <div class="d-flex align-items-center">
-                    <h3 class="p-2">Last Name: </h3>
-                    <h5 class="p-2">{{ user.last_name }}</h5>
-                </div>
-                <div class="d-flex align-items-center">
-                    <h3 class="p-2">Email: </h3>
-                    <h5 class="p-2">{{ user.email }}</h5>
-                </div>
-                <div class="d-flex align-items-center">
-                    <h3 class="p-2">Gender: </h3>
-                    <h5 class="p-2">{{ user.profile.gender }}</h5>
-                </div>
-                <div class="d-flex align-items-center">
-                    <h3 class="p-2">Date of Birth: </h3>
-                    <h5 class="p-2">{{ user.profile.date_of_birth }}</h5>
-                </div>
-                <div>
-                    <a class="btn btn-success" href="{% url 'edit' user.id %}">Edit</a>
-                    <a class="btn btn-warning" href="{% url 'edit_pass' user.id %}">Change Password</a>
-                    <a class="btn btn-info" href="{% url 'logout' %}">Logout</a>
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-4 bg-light my-4 p-2 rounded-lg custom-style">
+                <div class="mt-5 text-center">
+                    <img class="rounded-circle border border-primary border-3"
+                         src="{{ user.profile.profile_image.url }}" height="200px" width="200px" alt="profile_pic">
                 </div>
             </div>
-        </div>
-        <div class="col col-md-4 bg-light my-4 p-2 rounded-lg">
-            <form method="GET" action="">
-                <div class="p-2">
-                    {{ filter.form }}
-                    <button type="submit" class="btn btn-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-                        </svg>
-                        Search
-                    </button>
+            <div class="col col-md-4 bg-light my-4 p-2 rounded-lg custom-style">
+                <div class="pt-5 mt-5">
+                    <h2 class="text-primary">Profile Info: </h2>
+                    <div class="d-flex align-items-center">
+                        <h3 class="p-2">Username: </h3>
+                        <h5 class="p-2">{{ user.username }}</h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <h3 class="p-2">First Name: </h3>
+                        <h5 class="p-2">{{ user.first_name }}</h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <h3 class="p-2">Last Name: </h3>
+                        <h5 class="p-2">{{ user.last_name }}</h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <h3 class="p-2">Email: </h3>
+                        <h5 class="p-2">{{ user.email }}</h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <h3 class="p-2">Gender: </h3>
+                        <h5 class="p-2">{{ user.profile.gender }}</h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <h3 class="p-2">Date of Birth: </h3>
+                        <h5 class="p-2">{{ user.profile.date_of_birth }}</h5>
+                    </div>
+                    <div>
+                        <a class="btn btn-success" href="{% url 'edit' user.id %}">Edit</a>
+                        <a class="btn btn-warning" href="{% url 'edit_pass' user.id %}">Change Password</a>
+                        <a class="btn btn-info" href="{% url 'logout' %}">Logout</a>
+                    </div>
                 </div>
-                <div class="p-2">
-                    {% for user in users %}
-                        <h5><a href="" class="d-block">{{ user.username }}</a></h5>
-                    {% endfor %}
-                </div>
-            </form>
+            </div>
+            <div class="col col-md-4 bg-light my-4 p-2 rounded-lg custom-style">
+                <form method="GET" action="">
+                    <div class="p-2">
+                        {{ filter.form }}
+                        <button type="submit" class="btn btn-primary p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                            </svg>
+                            Search
+                        </button>
+                    </div>
+                    <div class="p-2">
+                        {% for user in users %}
+                            <h5><a href="" class="d-block">{{ user.username }}</a></h5>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

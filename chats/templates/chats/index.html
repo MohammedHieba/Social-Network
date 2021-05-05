@@ -1,0 +1,60 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Chats{% endblock %}
+{% block styles %}
+    <style>
+        .card-header img {
+            border-radius: 50%;
+            width: 10%;
+            margin-right: 20px;
+        }
+
+        .card-header {
+            font-weight: bolder;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Chats</h1>
+        <div class="row">
+            {% for chat in chats %}
+                <div class="col-12 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {% if chat.second_user == chat.second_user and chat.second_user == request.user %}
+                                <img src="{% get_media_prefix %}{{ request.user.profile.profile_image }}"
+                                     alt="{{ request.user.username }} profile picture.">
+                                You
+                            {% elif chat.first_user == request.user %}
+                                <img src="{% get_media_prefix %}{{ chat.second_user.profile.profile_image }}"
+                                     alt="{{ chat.second_user.username }} profile picture.">
+                                {{ chat.second_user }}
+                            {% else %}
+                                <img src="{% get_media_prefix %}{{ chat.first_user.profile.profile_image }}"
+                                     alt="{{ chat.first_user.username }} profile picture.">
+                                {{ chat.first_user }}
+                            {% endif %}
+                        </div>
+                        <div class="card-bodyd-flex justify-content-between my-2 mx-2">
+                            <div class="d-flex ml-5">
+                                <span class="text-info">{% if chat.message_set.last.by == request.user %}You{% else %}
+                                    chat.message_set.last.by{% endif %}:</span>
+                                <p class="card-text ml-4">{{ chat.message_set.last.message }}</p>
+                            </div>
+                            <a href="{% url 'Chats:show' chat.id %}" class="btn btn-primary float-right stretched-link">Chat</a>
+
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="d-flex justify-content-center w-100">
+                    <h2 class="text-center">No Chats Yet!</h2>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
