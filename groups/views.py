@@ -41,7 +41,7 @@ def join(request, group_id):
 
 
 @login_required
-def my_groups(request):
+def get_my_groups(request):
     user = request.user
     groups = Group.objects.filter(owner=user.username)
     context = {'groups': groups, }
@@ -49,17 +49,38 @@ def my_groups(request):
 
 
 @login_required
-def my_members(request, group_id):
-    pass
-    user = request.user
-    # my_group_id = [id[0] for id in Group.objects.filter(owner=user.username).values_list('id')]
-    # my_group_id = Group.objects.filter(owner=user.username)
-    # print(group_id)
-    members = Membership.objects.filter(group_id=group_id)
-    my_members_id = [id[0] for id in members.values_list('id')]
-    print("members", members)
-    type(members)
-    users = User.objects.filter(pk__in=my_members_id)
-    print("members", users)
-    context = {'members': members, 'users': users, }
+def get_my_requests(request, group_id):
+    members = get_group_members(group_id, is_approved=0)
+    context = {'members': members, 'group_id': group_id, }
+    return render(request, 'groups_views/my_requests.html', context)
+
+
+@login_required
+def get_my_members(request, group_id):
+    members = get_group_members(group_id, is_approved=1)
+    context = {'members': members, 'group_id': group_id, }
     return render(request, 'groups_views/my_members.html', context)
+
+
+@login_required
+def accept_request(request, user_id, group_id):
+    membership = Membership.objects.get(group_id=group_id, user_id=user_id)
+    membership.approved = True
+    membership.save()
+    members = get_group_members(group_id, is_approved=0)
+    return redirect('/groups/get_requests/' + str(group_id), {"members": members})
+
+
+@login_required
+def remove_members(request, user_id, group_id):
+    membership = Membership.objects.get(group_id=group_id, user_id=user_id)
+    membership.delete()
+    members = get_group_members(group_id, is_approved=1)
+    return redirect('/groups/get_members/' + str(group_id), {"members": members})
+
+
+@login_required
+def delete_group(request, group_id):
+    group = Group.objects.get(id=group_id)
+    group.delete()
+    return redirect('groups_index')

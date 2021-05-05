@@ -1,0 +1,64 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block styles %}
+    <style>
+        body {
+            background-color: #dbd8d8;
+        }
+
+        .custom-style {
+            background-color: #dfe6e9 !important;
+        }
+
+        .border-3 {
+            border-width: 3px !important;
+        }
+    </style>
+{% endblock %}
+
+
+{% block title %}
+    My Groups
+{% endblock %}
+
+{% block content %}
+    <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
+        <div class="mb-4 d-flex justify-content-between">
+            <h2>My Requests:</h2>
+        </div>
+
+        {% for member in members %}
+
+            <div class="card mb-3 mx-auto">
+                <div class="row py-4 align-items-center">
+                    <div class="col-md-4 w-50 m-auto text-center">
+                        <img src="{% get_media_prefix %}{{ member.profile.profile_image }}"
+                             class="rounded-circle border border-primary border-3"
+                             width="150px" height="150px" alt="group_image">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Name: {{ member.username }}</h4>
+                        </div>
+                    </div>
+                    <div class="col col-md-4">
+                        <div class="text-center">
+                            <h4>Actions</h4>
+                        </div>
+                        <div class="row justify-content-center mt-5">
+                            <div class="col col-md-4">
+                                <a class="btn btn-success" href="{% url 'groups_accept_request' member.id group_id %}">Accept</a>
+                            </div>
+                            <div class="col col-md-4">
+                                <a class="btn btn-danger" href="#">Decline</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+{% endblock %}

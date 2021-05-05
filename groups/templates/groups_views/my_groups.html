@@ -35,7 +35,9 @@
                             <h4 class="card-title">Name: {{ group.name }}</h4>
                             <p class="card-text">{{ group.description }}</p>
                             <p class="card-text"><small class="text-muted">{{ group.created_at }}</small></p>
-                            <a class="btn btn-primary" href="{% url 'groups_my_members' group.id %}">Show Members</a>
+                            <a class="btn btn-info" href="{% url 'groups_get_requests' group.id %}">Show Requests</a>
+                            <a class="btn btn-primary" href="{% url 'groups_get_members' group.id %}">Show Members</a>
+                            <a class="btn btn-danger" href="{% url 'groups_delete' group.id %}">Delete Group</a>
                         </div>
                     </div>
                 </div>
