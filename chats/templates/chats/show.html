@@ -1,0 +1,81 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if chat.first_user == request.user %}{{ chat.second_user }}{% else %}{{ chat.first_user }}{% endif %} Chat
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .profile-image {
+            width: 75%;
+            border-radius: 50%;
+            border: aqua 1px solid;
+        }
+
+        .chat-bubble {
+            background: lightblue;
+            border-radius: 50px 50px 50px 0;
+        }
+        .chat-head{
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container sticky-top">
+    <h2 class="bg-dark text-light p-3 chat-head">
+            {% if chat.first_user == request.user %}{{ chat.second_user }}{% else %}{{ chat.first_user }}{% endif %}'s Chat
+        </h2>
+    </div>
+
+    <div class="container img-thumbnail mt-3">
+        {% for message in chat.messages %}
+            <div class="row mt-3">
+                <div class="col-2"><img class="profile-image"
+                                        src="{% get_media_prefix %}{{ message.by.profile.profile_image }}"/></div>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-between">
+                            <span class="font-weight-bold">
+                                {% if message.by == request.user %}You{% else %}{{ message.by.username }}{% endif %}
+                            </span>
+                            <span class="text-muted">{{ message.created_at | timesince }} ago</span>
+                        </div>
+                    </div>
+                    <div class="row h-50 mt-2">
+                        <div class="col-12 px-4 img-thumbnail chat-bubble">
+                            <p class="mt-2">{{ message.message }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            No messages Yet!
+        {% endfor %}
+        <div class="row my-3 img-thumbnail mx-2">
+            <div class="col-12">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.errors }}
+                    {{ form.as_p }}
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            setTimeout(function () {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 100)
+        });
+    </script>
+{% endblock %}

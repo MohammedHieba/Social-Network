@@ -27,7 +27,8 @@ urlpatterns = [
     path("profile/", include("profile_info.urls")),
     path("groups/", include("groups.urls")),
     path('posts/', include("posts.urls"), name='posts'),
-    path('notifications/', include("notifications.urls")),
+    path('notifications/', include("notifications.urls", namespace="Notifications")),
+    path('chats/', include("chats.urls", namespace="Chats")),
     path("api/", include("api.urls", namespace="API"))
 ]
 
