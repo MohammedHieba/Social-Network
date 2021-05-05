@@ -72,6 +72,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
 ROOT_URLCONF = 'social_network.urls'
 
 TEMPLATES = [
