@@ -10,7 +10,7 @@ from notifications.utils import notify_and_email
 def send_message(sender, instance: Message, created: bool, *args, **kwargs):
     if created:
         to = instance.chat.second_user if instance.chat.first_user == instance.by else instance.chat.first_user
-        title = f"{instance.by} has sent you message"
+        title = "{sender} has sent you message"
         message = "{title}: " + instance.message + ". tap on the following button to reply."
-        redirect_to = "localhost"
+        redirect_to = reverse('Chats:show', kwargs={'id': instance.chat_id})
         notify_and_email(instance.by, to, title, message, redirect_to)
