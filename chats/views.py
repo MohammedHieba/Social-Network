@@ -4,6 +4,7 @@ from django.db.models import When, Q, Case, Value, Field, CharField, F
 
 # Create your views here.
 from django.http import HttpResponse, HttpResponseForbidden
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, FormView
 
@@ -27,7 +28,7 @@ class ChatView(FormView):
     form_class = MessageForm
 
     def get_success_url(self):
-        return '/chats/1'
+        return reverse('Chats:show', kwargs={"id": self.kwargs.get('id')})
 
     def dispatch(self, request, *args, **kwargs):
         chat = Chat.objects.filter(
