@@ -11,9 +11,7 @@ from .utils import *
 
 @login_required
 def index(request):
-    memberships = [group[0] for group in request.user.group_set.all().values_list('id')]
-    groups = Group.objects.all()
-    context = {'groups': groups, 'memberships': memberships, }
+    context = get_index_context(request)
     return render(request, 'groups_views/index.html', context)
 
 
@@ -77,6 +75,14 @@ def remove_members(request, user_id, group_id):
     membership.delete()
     members = get_group_members(group_id, is_approved=1)
     return redirect('/groups/get_members/' + str(group_id), {"members": members})
+
+
+@login_required
+def cancel_request(request, user_id, group_id):
+    membership = Membership.objects.get(group_id=group_id, user_id=user_id)
+    membership.delete()
+    members = get_group_members(group_id, is_approved=1)
+    return redirect('groups_index')
 
 
 @login_required

@@ -13,6 +13,34 @@
     <title>{% block title %}{% endblock %} | Social Network</title>
 </head>
 <body>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+  <a class="navbar-brand" href="#">Social Network</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_index' %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">another</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Groups
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'groups_index' %}">All Groups</a>
+          <a class="dropdown-item" href="{% url 'groups_my_groups' %}">My Groups</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
 <div class="container-fluid">
     {% block content %}{% endblock %}
 </div>
