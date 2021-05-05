@@ -24,6 +24,21 @@ def get_joined_groups(user_id):
     return joined_groups_id
 
 
+def get_joined_groups_context(request, joined_groups):
+    user = request.user
+    joined_groups_id = get_joined_groups(user.id)
+    joined_groups = Group.objects.filter(id__in=joined_groups_id)
+    groups = Group.objects.all()
+    user_query = request.GET.get('search_name')
+    my_filter = GroupsFilter(request.GET, queryset=joined_groups)
+    if request.GET and user_query:
+        groups = my_filter.qs
+        context = {'groups': groups, "filter": my_filter, }
+    else:
+        context = {'groups': joined_groups,  "filter": my_filter, }
+    return context
+
+
 def get_index_context(request):
     user = request.user
     memberships = [group[0] for group in request.user.group_set.all().values_list('id')]

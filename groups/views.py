@@ -10,6 +10,9 @@ from .forms import CreateGroupForm, EditGroupForm, EditGroupImageForm
 from .utils import *
 
 
+# return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 @login_required
 def index(request):
     context = get_index_context(request)
@@ -21,6 +24,12 @@ def show_group(request, group_id):
     group = Group.objects.get(id=group_id)
     context = {'group': group}
     return render(request, 'groups_views/show_group.html', context)
+
+
+@login_required
+def joined_groups(request):
+    context = get_joined_groups_context(request, joined_groups)
+    return render(request, 'groups_views/joined_groups.html', context)
 
 
 @login_required

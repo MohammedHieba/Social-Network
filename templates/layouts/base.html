@@ -58,6 +58,8 @@
                     active
                     {% elif request.resolver_match.url_name == 'groups_my_groups' %}
                     active
+                    {% elif request.resolver_match.url_name == 'groups_joined' %}
+                    active
                     {% endif %}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,6 +70,8 @@
                        href="{% url 'groups_index' %}">All Groups</a>
                     <a class="dropdown-item {% if request.resolver_match.url_name == 'groups_my_groups' %} active {% endif %}"
                        href="{% url 'groups_my_groups' %}">Created Groups</a>
+                    <a class="dropdown-item {% if request.resolver_match.url_name == 'groups_joined' %} active {% endif %}"
+                       href="{% url 'groups_joined' %}">Joined Groups</a>
                 </div>
         </ul>
         {% if request.user.is_authenticated %}

@@ -1,0 +1,76 @@
+{% extends "layouts/base.html" %}
+
+{% block styles %}
+    <style>
+        body {
+            background-color: #dbd8d8;
+        }
+
+        .custom-style {
+            background-color: #dfe6e9 !important;
+        }
+
+        .border-3 {
+            border-width: 3px !important;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    All Groups
+{% endblock %}
+
+{% block content %}
+    <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
+        <div class="mb-4 d-flex justify-content-between">
+            <h2>Joined Groups:</h2>
+            <div>
+                <form method="GET" action="">
+                    {{ filter.form }}
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                        </svg>
+                        Search
+                    </button>
+                </form>
+            </div>
+            <div>
+                <a href="{% url 'groups_my_groups' %}" class="btn btn-success mr-2">
+                    <i class="fas fa-users"></i>
+                    Created Groups
+                </a>
+                <a href="{% url 'groups_create' %}" class="btn btn-primary mr-2">
+                    <i class="fas fa-plus-circle"></i>
+                    Create Group
+                </a>
+            </div>
+        </div>
+        {% for group in groups %}
+            <div class="card mb-3 mx-auto">
+                <div class="row">
+                    <div class="col-md-4 w-50 m-auto text-center">
+                        <img src="{{ group.group_image.url }}" class="rounded-circle border border-primary border-3"
+                             width="150px" height="150px" alt="group_image">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title">Name: {{ group.name }}</h4>
+                            <h6 class="card-title">Owner: {{ group.owner }}</h6>
+                            <p class="card-text">{{ group.description }}</p>
+                            <p class="card-text"><small class="text-muted">{{ group.created_at }}</small></p>
+                            <a class="btn btn-primary" href="{% url 'groups_show' group.id %}">Show Group</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://kit.fontawesome.com/7f1419bc41.js" crossorigin="anonymous"></script>
+{% endblock %}
