@@ -9,4 +9,3 @@ class GroupsFilter(django_filters.FilterSet):
     class Meta:
         model: User
         exclude: '__all__'
-        # fields = ('name',)

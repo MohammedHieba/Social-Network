@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 
-from .forms import CreateGroupForm
+from .forms import CreateGroupForm, EditGroupForm, EditGroupImageForm
 from .utils import *
 
 
@@ -13,6 +14,28 @@ from .utils import *
 def index(request):
     context = get_index_context(request)
     return render(request, 'groups_views/index.html', context)
+
+
+@login_required
+def show_group(request, group_id):
+    group = Group.objects.get(id=group_id)
+    context = {'group': group}
+    return render(request, 'groups_views/show_group.html', context)
+
+
+@login_required
+def edit(request, group_id):
+    group = Group.objects.get(id=group_id)
+    group_form = EditGroupForm(request.POST or None, instance=group)
+    group_image_form = EditGroupImageForm(request.POST or None, request.FILES, instance=group)
+    if request.method == 'POST':
+        if group_form.is_valid() and group_image_form.is_valid():
+            print(group_form.cleaned_data)
+            group_form.save()
+            group_image_form.save()
+            return redirect('groups_my_groups')
+    context = {'form': group_form, 'image_form': group_image_form, 'group': group, }
+    return render(request, 'groups_views/edit.html', context)
 
 
 @login_required
@@ -67,6 +90,13 @@ def accept_request(request, user_id, group_id):
     membership.save()
     members = get_group_members(group_id, is_approved=0)
     return redirect('/groups/get_requests/' + str(group_id), {"members": members})
+
+
+def decline_request(request, user_id, group_id):
+    print(user_id, group_id)
+    membership = Membership.objects.get(user_id=user_id, group_id=group_id)
+    membership.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required

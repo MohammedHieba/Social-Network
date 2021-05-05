@@ -24,20 +24,27 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item {% if request.resolver_match.url_name == 'profile_index' %}active{% endif %}">
+            <li class="nav-item {% if request.resolver_match.url_name == 'profile_index' %} active {% endif %}">
                 <a class="nav-link" href="{% url 'profile_index' %}">Profile</a>
             </li>
             <li class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'Chats:index' %}">Chats</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown
+                    {% if request.resolver_match.url_name == 'groups_index' %}
+                    active
+                    {% elif request.resolver_match.url_name == 'groups_my_groups' %}
+                    active
+                    {% endif %}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Groups
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{% url 'groups_index' %}">All Groups</a>
-                    <a class="dropdown-item" href="{% url 'groups_my_groups' %}">My Groups</a>
+                <div class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item {% if request.resolver_match.url_name == 'groups_index' %} active {% endif %}"
+                       href="{% url 'groups_index' %}">All Groups</a>
+                    <a class="dropdown-item {% if request.resolver_match.url_name == 'groups_my_groups' %} active {% endif %}"
+                       href="{% url 'groups_my_groups' %}">Created Groups</a>
                 </div>
         </ul>
     </div>

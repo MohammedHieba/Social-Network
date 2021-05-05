@@ -18,17 +18,25 @@ def get_group_members(group_id, is_approved):
     return users
 
 
+def get_joined_groups(user_id):
+    joined_groups = Membership.objects.filter(user_id=user_id, approved=1)
+    joined_groups_id = [group[0] for group in joined_groups.values_list('group_id')]
+    return joined_groups_id
+
+
 def get_index_context(request):
+    user = request.user
     memberships = [group[0] for group in request.user.group_set.all().values_list('id')]
     groups = Group.objects.all()
     user_query = request.GET.get('search_name')
     my_filter = GroupsFilter(request.GET, queryset=groups)
+    joined_groups = Membership.objects.filter(user_id=user.id, approved=1)
+    joined_groups_id = [group[0] for group in joined_groups.values_list('group_id')]
     if request.GET and user_query:
-        print("yes")
         groups = my_filter.qs
-        context = {'groups': groups, 'memberships': memberships, "filter": my_filter, }
+        context = {'groups': groups, 'memberships': memberships, "filter": my_filter,
+                   'joined_groups_id': joined_groups_id, }
     else:
-        print("no")
-        context = {'groups': groups, 'memberships': memberships, "filter": my_filter, }
-    print(groups)
+        context = {'groups': groups, 'memberships': memberships, "filter": my_filter,
+                   'joined_groups_id': joined_groups_id, }
     return context

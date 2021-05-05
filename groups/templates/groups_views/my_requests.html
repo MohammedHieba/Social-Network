@@ -51,7 +51,7 @@
                                 <a class="btn btn-success" href="{% url 'groups_accept_request' member.id group_id %}">Accept</a>
                             </div>
                             <div class="col col-md-4">
-                                <a class="btn btn-danger" href="#">Decline</a>
+                                <a class="btn btn-danger" href="{% url 'groups_decline_request' member.id group_id %}">Decline</a>
                             </div>
                         </div>
                     </div>

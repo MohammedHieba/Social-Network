@@ -54,11 +54,8 @@ def edit(request, user_id):
         image_form.save()
         user_form.save()
         return redirect('profile_index')
-    return render(request, 'profile_info_views/edit.html', {
-        "form": user_form,
-        "profile": image_form,
-        "user": user
-    })
+    context = {"form": user_form, "profile": image_form, "user": user}
+    return render(request, 'profile_info_views/edit.html', context)
 
 
 @login_required
