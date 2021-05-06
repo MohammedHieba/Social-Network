@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView, DeleteView
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        posts = Post.objects.all().order_by('-created_on')
+        posts = Post.objects.all()
         form = PostForm()
 
         context = {
@@ -35,11 +35,23 @@ class PostListView(LoginRequiredMixin, View):
         return render(request, 'posts/post_list.html', context)
 
 
+def delete_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.delete()
+    return redirect('post-list')
+
+
+def delete_comment(request, post_id, comment_id):
+    comment = Comment.objects.get(id=comment_id, post_id=post_id)
+    comment.delete()
+    return redirect('post-detail', post_id)
+
+
 class PostDetailView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         post = Post.objects.get(pk=pk)
         form = CommentForm()
-        comments = Comment.objects.filter(post=post).order_by('-created_on')
+        comments = Comment.objects.filter(post=post)
 
         context = {
             'post': post,
@@ -59,7 +71,7 @@ class PostDetailView(LoginRequiredMixin, View):
             new_comment.post = post
             new_comment.save()
 
-        comments = Comment.objects.filter(post=post).order_by('-created_on')
+        comments = Comment.objects.filter(post=post)
 
         context = {
             'post': post,
@@ -68,6 +80,7 @@ class PostDetailView(LoginRequiredMixin, View):
         }
 
         return render(request, 'posts/post_detail.html', context)
+
 
 class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -136,6 +149,7 @@ class AddLike(LoginRequiredMixin, View):
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
+
 class AddDislike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.get(pk=pk)
@@ -163,13 +177,12 @@ class AddDislike(LoginRequiredMixin, View):
         if is_dislike:
             post.dislikes.remove(request.user)
 
-
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
 
 class AddLikeToComment(LoginRequiredMixin, View):
-    def comment(self, request, pk, *args, **kwargs):
+    def post(self, request, pk, *args, **kwargs):
         comment = Comment.objects.get(pk=pk)
 
         is_dislike = False
@@ -200,7 +213,7 @@ class AddLikeToComment(LoginRequiredMixin, View):
 
 
 class AddDislikeToComment(LoginRequiredMixin, View):
-    def comment(self, request, pk, *args, **kwargs):
+    def post(self, request, pk, *args, **kwargs):
         comment = Comment.objects.get(pk=pk)
 
         is_like = False

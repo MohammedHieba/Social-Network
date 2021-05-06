@@ -89,7 +89,6 @@ def get_my_requests(request, group_id):
 def get_my_members(request, group_id):
     members = get_group_members(group_id, is_approved=1)
     group = Group.objects.get(id=group_id)
-    print(group)
     context = {'members': members, 'group_id': group_id, 'group': group}
     return render(request, 'groups_views/my_members.html', context)
 
@@ -104,7 +103,6 @@ def accept_request(request, user_id, group_id):
 
 
 def decline_request(request, user_id, group_id):
-    print(user_id, group_id)
     membership = Membership.objects.get(user_id=user_id, group_id=group_id)
     membership.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
