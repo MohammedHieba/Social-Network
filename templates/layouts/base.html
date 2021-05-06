@@ -111,7 +111,11 @@
         crossorigin="anonymous"></script>
 {% if request.user.is_authenticated %}
     <script>
+        const notificationNumber = $(".notification-number").first()
         const renderNotification = (detail, sorted = true) => {
+            if (!detail.is_seen) {
+                notificationNumber.html(Number(notificationNumber.html()) + 1)
+            }
             const fromNow = moment(detail.created_at).fromNow()
             const dropContent = $('.drop-content');
             const createdElement = $("<div class='row ml-3 pr-4 notification-item p-2'><div class='col-11'></div></div>")
@@ -131,8 +135,6 @@
             const notificationsWebSocket = new WebSocket(`ws://${window.location.host}/ws/notifications/`)
             notificationsWebSocket.onmessage = event => {
                 renderNotification(JSON.parse(event.data).message, false)
-                const notificationNumber = $(".notification-number").first()
-                notificationNumber.html(Number(notificationNumber.html()) + 1)
                 const audio = new Audio("http://localhost:8000/media/notifications/insight-578.mp3");
                 audio.play();
             }
@@ -144,7 +146,12 @@
                     renderNotification(elem)
                 }))
 
-            $(".notify-drop-button").click(event => $(".notification-number").html(0))
+            $(".notify-drop-button").click(event => {
+                if (notificationsWebSocket.readyState !== WebSocket.CLOSED) {
+                    $(".notification-number").html(0)
+                    notificationsWebSocket.send(JSON.stringify({notification: "seen"}))
+                }
+            })
         })
     </script>
 {% endif %}

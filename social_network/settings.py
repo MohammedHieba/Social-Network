@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     # Created applications
     'chats',
     'notifications',
+    'bad_words',
 
     # Third party Applications
     'channels'
