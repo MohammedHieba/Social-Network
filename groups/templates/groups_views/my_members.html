@@ -25,7 +25,7 @@
 {% block content %}
     <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
         <div class="mb-4 d-flex justify-content-between">
-            <h2>My Members:</h2>
+            <h2>Members:</h2>
         </div>
 
         {% for member in members %}
@@ -39,7 +39,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="card-body">
-                            <h4 class="card-title">Name: {{ member.username }}</h4>
+                            <h4 class="card-title">Name: <a
+                                    href="{% url 'profile_index' member.id %}">{{ member.username }}</a></h4>
                         </div>
                     </div>
                     <div class="col col-md-4">
@@ -48,37 +49,45 @@
                         </div>
                         <div class="row justify-content-center mt-5">
                             <div class="col col-md-4">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-warning" data-toggle="modal"
-                                        data-target="#exampleModal{{ member.id }}">
-                                    Remove
-                                </button>
+                                {% if group.owner_id == request.user.id %}
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                                            data-target="#exampleModal{{ member.id }}">
+                                        Remove
+                                    </button>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal{{ member.id }}" tabindex="-1"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Remove User</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to <strong class="text-danger d-inline-block">Remove {{ member.username }}</strong>?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Close
-                                                </button>
-                                                <a class="btn btn-danger" href="{% url 'groups_remove_members' member.id group_id %}">Yes, Remove</a>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal{{ member.id }}" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Remove User</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to <strong class="text-danger d-inline-block">Remove {{ member.username }}</strong>?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <a class="btn btn-danger"
+                                                       href="{% url 'groups_remove_members' member.id group_id %}">Yes,
+                                                        Remove</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                    </div>
+                                    <button class="btn btn-primary">Add Friend</button>
+
+                                {% endif %}
                         </div>
                     </div>
                 </div>

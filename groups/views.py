@@ -38,10 +38,11 @@ def edit(request, group_id):
     group_form = EditGroupForm(request.POST or None, instance=group)
     group_image_form = EditGroupImageForm(request.POST or None, request.FILES, instance=group)
     if request.method == 'POST':
+        http_referer = request.POST.get('refer')
         if group_form.is_valid() and group_image_form.is_valid():
             group_form.save()
             group_image_form.save()
-            return redirect('groups_my_groups')
+            return redirect(http_referer)
     context = {'form': group_form, 'image_form': group_image_form, 'group': group, }
     return render(request, 'groups_views/edit.html', context)
 
@@ -87,7 +88,9 @@ def get_my_requests(request, group_id):
 @login_required
 def get_my_members(request, group_id):
     members = get_group_members(group_id, is_approved=1)
-    context = {'members': members, 'group_id': group_id, }
+    group = Group.objects.get(id=group_id)
+    print(group)
+    context = {'members': members, 'group_id': group_id, 'group': group}
     return render(request, 'groups_views/my_members.html', context)
 
 

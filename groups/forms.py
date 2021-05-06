@@ -9,7 +9,7 @@ class CreateGroupForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control p-1'
 
-    owner = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    owner = forms.ModelChoiceField(widget=forms.TextInput(attrs={'readonly': 'readonly'}), queryset=User.objects.all())
 
     class Meta:
         model = Group
@@ -20,11 +20,10 @@ class CreateGroupForm(forms.ModelForm):
 class EditGroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EditGroupForm, self).__init__(*args, **kwargs)
-        self.fields['owner'].widget.attrs['readonly'] = True
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control p-1'
 
-    owner = forms.ModelChoiceField(widget=forms.TextInput(attrs={'readonly': 'readonly'}), queryset=User.objects)
+    owner = forms.ModelChoiceField(widget=forms.TextInput(attrs={'readonly': 'readonly'}), queryset=User.objects.all())
 
     class Meta:
         model = Group

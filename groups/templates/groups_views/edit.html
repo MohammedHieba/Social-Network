@@ -44,6 +44,7 @@
                 </div>
             {% endfor %}
             {{ image_form.as_p }}
+            <input type="text" hidden name="refer" value="{{ request.META.HTTP_REFERER }}">
             <button class="btn btn-primary btn-block" type="submit">Update</button>
         </div>
     </form>
