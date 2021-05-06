@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from accounts.models import User
+from groups.models import Group
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
@@ -9,6 +10,7 @@ class Post(models.Model):
     class Meta:
         ordering = ('-created_at', )
 
+    group_posts = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
