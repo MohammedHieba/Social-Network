@@ -1,9 +1,11 @@
 import json
 
 from asgiref.sync import async_to_sync
+from channels.db import database_sync_to_async
 from channels.generic.websocket import WebsocketConsumer
 
 from notifications.api.serializers import NotificationSerializer
+from notifications.models import Notification
 
 
 class NotificationConsumer(WebsocketConsumer):
@@ -31,16 +33,12 @@ class NotificationConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        message = text_data_json['notification']
+        if message == "seen":
+            self.mark_notifications_as_read()
 
-        # Send message to room group
-        async_to_sync(self.channel_layer.group_send)(
-            self.notification_group_name,
-            {
-                'type': 'notification_message',
-                'message': message
-            }
-        )
+    def mark_notifications_as_read(self):
+        Notification.objects.filter(receiver=self.user).update(is_seen=True)
 
     # Receive message from room group
     def notification_message(self, event):

@@ -32,6 +32,7 @@ class Notification(models.Model):
     redirect_to = models.CharField(max_length=255, null=True)
     notification_type = models.CharField(max_length=100, choices=NotificationTypes.choices,
                                          default=NotificationTypes.NOTIFY)
+    is_seen = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     objects = NotificationManager()
 
