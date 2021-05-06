@@ -126,12 +126,12 @@
 
         }
         $(document).ready(function () {
-            const audio = new Audio("http://localhost:8000/media/notifications/insight-578.mp3");
             const notificationsWebSocket = new WebSocket(`ws://${window.location.host}/ws/notifications/`)
             notificationsWebSocket.onmessage = event => {
                 renderNotification(JSON.parse(event.data).message, false)
                 const notificationNumber = $(".notification-number").first()
                 notificationNumber.html(Number(notificationNumber.html()) + 1)
+                const audio = new Audio("http://localhost:8000/media/notifications/insight-578.mp3");
                 audio.play();
             }
             notificationsWebSocket.onclose = event => alert("Connection to socket lost please refresh page.")
