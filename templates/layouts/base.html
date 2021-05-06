@@ -49,7 +49,7 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item {% if request.resolver_match.url_name == 'profile_index' %} active {% endif %}">
-                <a class="nav-link" href="{% url 'profile_index' %}">Profile</a>
+                <a class="nav-link" href="{% url 'profile_index' request.user.id %}">Profile</a>
             </li>
             <li class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'Chats:index' %}">Chats</a>
@@ -87,8 +87,14 @@
                         <div class="drop-content overflow-auto" style="height: 500px"></div>
                     </ul>
                 </li>
+
             </ul>
         {% endif %}
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link bg-primary rounded-lg text-white" href="{% url 'logout' %}">Logout</a>
+            </li>
+        </ul>
     </div>
 </nav>
 <div class="container-fluid">

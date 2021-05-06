@@ -23,14 +23,24 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col col-md-4 bg-light my-4 p-2 rounded-lg custom-style">
+            <div class="col col-md-3 bg-light my-4 p-2 rounded-lg custom-style">
                 <div class="mt-5 text-center">
                     <img class="rounded-circle border border-primary border-3"
                          src="{{ user.profile.profile_image.url }}" height="200px" width="200px" alt="profile_pic">
                 </div>
+                {% if request.user.id == user.id %}
+                    <div class="w-100 d-flex justify-content-center mt-5">
+                        <a class="btn btn-success mr-2" href="{% url 'edit' user.id %}">Edit</a>
+                        <a class="btn btn-warning" href="{% url 'edit_pass' user.id %}">Change Password</a>
+                    </div>
+                {% else %}
+                    <div class="w-75 mx-auto mt-5">
+                        <a class="btn btn-outline-success btn-block" href="{% url 'add_friend' user.id %}">Add Friend</a>
+                    </div>
+                {% endif %}
             </div>
-            <div class="col col-md-4 bg-light my-4 p-2 rounded-lg custom-style">
-                <div class="pt-5 mt-5">
+            <div class="col ml-2 col-md-4 bg-light my-4 p-2 rounded-lg custom-style">
+                <div class="p-3 mt-">
                     <h2 class="text-primary">Profile Info: </h2>
                     <div class="d-flex align-items-center">
                         <h3 class="p-2">Username: </h3>
@@ -48,6 +58,7 @@
                         <h3 class="p-2">Email: </h3>
                         <h5 class="p-2">{{ user.email }}</h5>
                     </div>
+
                     <div class="d-flex align-items-center">
                         <h3 class="p-2">Gender: </h3>
                         <h5 class="p-2">{{ user.profile.gender }}</h5>
@@ -56,14 +67,10 @@
                         <h3 class="p-2">Date of Birth: </h3>
                         <h5 class="p-2">{{ user.profile.date_of_birth }}</h5>
                     </div>
-                    <div>
-                        <a class="btn btn-success" href="{% url 'edit' user.id %}">Edit</a>
-                        <a class="btn btn-warning" href="{% url 'edit_pass' user.id %}">Change Password</a>
-                        <a class="btn btn-info" href="{% url 'logout' %}">Logout</a>
-                    </div>
+
                 </div>
             </div>
-            <div class="col col-md-4 bg-light my-4 p-2 rounded-lg custom-style">
+            <div class="col ml-2 col-md-4 bg-light my-4 p-2 rounded-lg custom-style">
                 <form method="GET" action="">
                     <div class="p-2">
                         {{ filter.form }}
@@ -77,7 +84,7 @@
                     </div>
                     <div class="p-2">
                         {% for user in users %}
-                            <h5><a href="" class="d-block">{{ user.username }}</a></h5>
+                            <h5><a href="{% url 'profile_index' user.id %}" class="d-block">{{ user.username }}</a></h5>
                         {% endfor %}
                     </div>
                 </form>

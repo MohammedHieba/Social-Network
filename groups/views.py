@@ -73,7 +73,7 @@ def join(request, group_id):
 @login_required
 def get_my_groups(request):
     user = request.user
-    groups = Group.objects.filter(owner=user.username)
+    groups = Group.objects.filter(owner=user)
     context = {'groups': groups, }
     return render(request, 'groups_views/my_groups.html', context)
 

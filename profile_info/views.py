@@ -39,8 +39,8 @@ def signup(request):
 
 
 @login_required
-def index(request):
-    context = get_index_context(request)
+def index(request, user_id):
+    context = get_index_context(request, user_id)
     return render(request, 'profile_info_views/index.html', context)
 
 

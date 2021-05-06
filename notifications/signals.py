@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.urls import reverse
 
 from chats.models import Message
+from groups.models import Membership
 from notifications.utils import notify_and_email
 
 
@@ -14,4 +15,16 @@ def send_message(sender, instance: Message, created: bool, *args, **kwargs):
         message = "{title}: " + instance.message + ". tap on the following button to reply."
         redirect_to = reverse('Chats:show', kwargs={'id': instance.chat_id})
         notify_and_email(instance.by, to, title, message, redirect_to)
+
+
+@receiver(post_save, sender=Membership)
+def send_message(sender, instance: Membership, created: bool, *args, **kwargs):
+    if created:
+        sender = instance.user
+        to = instance.group.owner
+        title = "{sender} has requested to join your group {group}"
+        message = "{title}: tap on the following button to reply."
+        redirect_to = reverse('groups_get_requests', kwargs={'group_id': instance.group_id})
+        notify_and_email(sender, to, title, message, redirect_to, instance.group)
+
 
