@@ -4,7 +4,8 @@ from .views import PostListView, PostDetailView, PostEditView, PostDeleteView, \
 from . import views
 
 urlpatterns = [
-    path('', PostListView.as_view(), name='post-list'),
+    path('home', PostListView.as_view(), name='post-list'),
+    path("", views.home, name="home"),
     path('<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('edit/<int:pk>/', PostEditView.as_view(), name='post-edit'),
     path('delete/<post_id>/', views.delete_post, name='post_delete'),

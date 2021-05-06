@@ -35,6 +35,10 @@ class PostListView(LoginRequiredMixin, View):
         return render(request, 'posts/post_list.html', context)
 
 
+def home(request):
+    return render(request, 'posts/home.html')
+
+
 def delete_post(request, post_id):
     post = Post.objects.get(id=post_id)
     post.delete()

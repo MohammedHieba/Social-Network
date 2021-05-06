@@ -2,7 +2,17 @@
 {% load crispy_forms_tags %}
 
 {% block title %}List of Posts{% endblock %}
-
+{% block styles %}
+    <style>
+    .custom-hover-list{
+        transition: background-color 0.5s ease-in-out;
+    }
+    .custom-hover-list:hover{
+        {#background-color: #edf7fd !important;#}
+        background-color: #acd0f3 !important;
+    }
+    </style>
+{% endblock %}
 {% block scripts %}
     <script>
         const submit_btn = document.getElementById('submit');
@@ -37,7 +47,7 @@
             </div>
         </div>
         {% for post in post_list %}
-            <div class="bg-light  rounded-lg py-4 my-4">
+            <div class="bg-light rounded-lg py-4 my-4 custom-hover-list">
                 <div class="row justify-content-center mt-3">
                     <div class="col-3 text-center">
                         <img class="rounded-circle border border-primary border-3"

@@ -36,6 +36,7 @@
                 {% else %}
                     <div class="w-75 mx-auto mt-5">
                         <a class="btn btn-outline-success btn-block" href="{% url 'add_friend' user.id %}">Add Friend</a>
+                        <a class="btn btn-outline-info btn-block" href="{% url 'Chats:new_chat' user.id %}">Send a Message</a>
                     </div>
                 {% endif %}
             </div>

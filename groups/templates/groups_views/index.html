@@ -13,6 +13,13 @@
         .border-3 {
             border-width: 3px !important;
         }
+            .custom-hover-group{
+        transition: background-color 0.5s ease-in-out;
+    }
+    .custom-hover-group:hover{
+        {#background-color: #edf7fd !important;#}
+        background-color: #acd0f3 !important;
+    }
     </style>
 {% endblock %}
 
@@ -48,7 +55,7 @@
             </div>
         </div>
         {% for group in groups %}
-            <div class="card mb-3 mx-auto">
+            <div class="card mb-3 mx-auto custom-hover-group">
                 <div class="row">
                     <div class="col-md-4 w-50 m-auto text-center">
                         <img src="{{ group.group_image.url }}" class="rounded-circle border border-primary border-3"

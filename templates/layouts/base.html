@@ -50,6 +50,27 @@
     <title>{% block title %}{% endblock %} | Social Network</title>
 </head>
 <body>
+
+{### MODAL ###}
+<div class="modal fade" id="notificationAlert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Connection lost</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Connection to socket lost please refresh page.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
     <a class="navbar-brand ml-5" href="{% url 'post-list' %}">Social Network</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -151,7 +172,7 @@
                 const audio = new Audio("http://localhost:8000/media/notifications/insight-578.mp3");
                 audio.play();
             }
-            notificationsWebSocket.onclose = event => alert("Connection to socket lost please refresh page.")
+            notificationsWebSocket.onclose = event => $("#notificationAlert").modal('show');
 
             fetch('/api/notifications')
                 .then(response => response.json())

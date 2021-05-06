@@ -36,15 +36,6 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'posts',
-    'crispy_forms',
-    'accounts',
-    'api.apps.ApiConfig',
-    'rest_framework',
-    'groups',
-    'django_filters',
-    'profile_info.apps.ProfileInfoConfig',
-
     # Built-in applications
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,12 +45,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Created applications
+    'accounts',
+    'api',
     'chats',
     'notifications',
     'bad_words',
+    'groups',
+    'profile_info',
+    'posts',
 
     # Third party Applications
-    'channels'
+    'channels',
+    'crispy_forms',
+    'rest_framework',
+    'django_filters',
 ]
 
 # LOGOUT_REDIRECT_URL = "/book/"
@@ -168,9 +167,11 @@ DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+AUTH_USER_MODEL = 'accounts.User'
 # login URL and Login redirection for the posts (just for now before adding the wall)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/home'
 LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

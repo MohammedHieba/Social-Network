@@ -1,0 +1,10 @@
+{% extends 'layouts/plain.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+    <a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
+{% endblock %}

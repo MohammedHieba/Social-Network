@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+
 from django.db.models import When, Q, Case, Value, Field, CharField, F
 
 # Create your views here.
@@ -50,9 +50,10 @@ class ChatView(FormView):
         return super().form_valid(form)
 
 
-@method_decorator(login_required)
-def chat(request, user):
+@login_required
+def chat(request, user_id):
+    user = User.objects.get(id=user_id)
     chat = Chat.objects.search_by_user(request.user, user)
     if not chat.exists():
-        Chat.objects.create(first_user=request.user, second_user=user)
-    return reverse('Chats:show', kwargs={"id": chat.id})
+        chat = Chat.objects.create(first_user=request.user, second_user=user)
+    return redirect('Chats:show', chat.id)
