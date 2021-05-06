@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h4 class="card-title">Name: {{ group.name }}</h4>
+                            <h4 class="card-title">Name: <a href="{% url 'groups_show' group.id %}">{{ group.name }}</a></h4>
                             <p class="card-text">Description: {{ group.description }}</p>
                             <p class="card-text"><small class="text-muted">Created at: {{ group.created_at }}</small></p>
                             <a class="btn btn-info" href="{% url 'groups_get_requests' group.id %}">Show Requests</a>

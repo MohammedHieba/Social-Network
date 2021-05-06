@@ -39,7 +39,6 @@ def edit(request, group_id):
     group_image_form = EditGroupImageForm(request.POST or None, request.FILES, instance=group)
     if request.method == 'POST':
         if group_form.is_valid() and group_image_form.is_valid():
-            print(group_form.cleaned_data)
             group_form.save()
             group_image_form.save()
             return redirect('groups_my_groups')
@@ -74,7 +73,7 @@ def join(request, group_id):
 def get_my_groups(request):
     user = request.user
     groups = Group.objects.filter(owner=user)
-    context = {'groups': groups, }
+    context = {'groups': groups, 'user': user, }
     return render(request, 'groups_views/my_groups.html', context)
 
 

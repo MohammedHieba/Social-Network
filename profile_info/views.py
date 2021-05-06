@@ -53,7 +53,7 @@ def edit(request, user_id):
     if user_form.is_valid() and image_form.is_valid():
         image_form.save()
         user_form.save()
-        return redirect('profile_index')
+        return redirect('profile_index', user_id)
     context = {"form": user_form, "profile": image_form, "user": user}
     return render(request, 'profile_info_views/edit.html', context)
 
