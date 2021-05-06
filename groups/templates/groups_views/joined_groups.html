@@ -60,7 +60,7 @@
                             <h6 class="card-title">Owner: {{ group.owner }}</h6>
                             <p class="card-text">{{ group.description }}</p>
                             <p class="card-text"><small class="text-muted">{{ group.created_at }}</small></p>
-                            <a class="btn btn-primary" href="{% url 'groups_show' group.id %}">Show Group</a>
+                            <a class="btn btn-primary" href="{% url 'groups_show' group.id %}">Show Group <i class="far fa-eye"></i></a>
                         </div>
                     </div>
                 </div>

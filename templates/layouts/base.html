@@ -49,10 +49,12 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item {% if request.resolver_match.url_name == 'profile_index' %} active {% endif %}">
-                <a class="nav-link" href="{% url 'profile_index' request.user.id %}">Profile</a>
+                <a class="nav-link"
+                   href="{% url 'profile_index' request.user.id %}"><i class="fas fa-user-circle"></i> Profile</a>
             </li>
             <li class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
-                <a class="nav-link" href="{% url 'Chats:index' %}">Chats</a>
+                <a class="nav-link"
+                   href="{% url 'Chats:index' %}"><i class="fas fa-comment-dots"></i> Chats</a>
             </li>
             <li class="nav-item dropdown
                     {% if request.resolver_match.url_name == 'groups_index' %}
@@ -64,15 +66,15 @@
                     {% endif %}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Groups
+                    <i class="fas fa-users"></i> Groups
                 </a>
                 <div class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item {% if request.resolver_match.url_name == 'groups_index' %} active {% endif %}"
-                       href="{% url 'groups_index' %}">All Groups</a>
+                       href="{% url 'groups_index' %}"><i class="fas fa-users"></i> All Groups</a>
                     <a class="dropdown-item {% if request.resolver_match.url_name == 'groups_my_groups' %} active {% endif %}"
-                       href="{% url 'groups_my_groups' %}">Created Groups</a>
+                       href="{% url 'groups_my_groups' %}"><i class="fas fa-plus-circle"></i> Created Groups</a>
                     <a class="dropdown-item {% if request.resolver_match.url_name == 'groups_joined' %} active {% endif %}"
-                       href="{% url 'groups_joined' %}">Joined Groups</a>
+                       href="{% url 'groups_joined' %}"><i class="fas fa-sign-in-alt"></i> Joined Groups</a>
                 </div>
         </ul>
         {% if request.user.is_authenticated %}
