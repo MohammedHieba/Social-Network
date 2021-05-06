@@ -15,7 +15,7 @@ def signup(request):
     form = SignUpForm(request.POST or None)
     profile = ProfileForm(request.POST or None)
     if request.method == "POST":
-        ProfileForm(request.POST, request.FILES)
+        ProfileForm(request.POST or None, request.FILES)
         if form.is_valid() and profile.is_valid():
             if not request.FILES.get('profile_image', False):
                 profile.cleaned_data['profile_image'] = 'default.jpg'
@@ -30,7 +30,7 @@ def signup(request):
             Profile.objects.filter(user=user).update(**profile.cleaned_data)
             if user:
                 login(request, user)
-                return redirect("profile_index")
+                return redirect("profile_index", user.id)
             else:
                 print(form.errors)
     return render(request, "registration/signup.html", {
