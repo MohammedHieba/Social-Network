@@ -26,6 +26,7 @@ urlpatterns = [
     path("signup", profile_info.views.signup, name="signup"),
     path("profile/", include("profile_info.urls")),
     path("groups/", include("groups.urls")),
+    path("user/", include("accounts.urls")),
     path('', include("posts.urls"), name='posts'),
     path('notifications/', include("notifications.urls", namespace="Notifications")),
     path('chats/', include("chats.urls", namespace="Chats")),

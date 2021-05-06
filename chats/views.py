@@ -1,14 +1,14 @@
 from django.contrib.auth.decorators import login_required
 
-from django.db.models import When, Q, Case, Value, Field, CharField, F
+from django.db.models import Q
 
-# Create your views here.
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, FormView
 
+from accounts.models import User
 from chats.forms import MessageForm
 from chats.models import Chat, Message
 

@@ -15,19 +15,14 @@ def signup(request):
     form = SignUpForm(request.POST or None)
     profile = ProfileForm(request.POST or None)
     if request.method == "POST":
-        ProfileForm(request.POST or None, request.FILES)
+
         if form.is_valid() and profile.is_valid():
-            if not request.FILES.get('profile_image', False):
-                profile.cleaned_data['profile_image'] = 'default.jpg'
-            else:
-                profile_pic = profile.cleaned_data['profile_image'] = request.FILES['profile_image']
-                fs = FileSystemStorage()
-                fs.save(profile_pic.name, profile_pic)
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
-            Profile.objects.filter(user=user).update(**profile.cleaned_data)
+            profile = ProfileForm(request.POST, request.FILES, instance=user.profile)
+            profile.save()
             if user:
                 login(request, user)
                 return redirect("profile_index", user.id)
