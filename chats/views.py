@@ -48,3 +48,11 @@ class ChatView(FormView):
         Message.objects.create(message=form.cleaned_data.get('message'), chat_id=self.kwargs.get('id'),
                                by=self.request.user)
         return super().form_valid(form)
+
+
+@method_decorator(login_required)
+def chat(request, user):
+    chat = Chat.objects.search_by_user(request.user, user)
+    if not chat.exists():
+        Chat.objects.create(first_user=request.user, second_user=user)
+    return reverse('Chats:show', kwargs={"id": chat.id})
