@@ -1,5 +1,5 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,20 +23,33 @@
         body {
             background-color: #dbd8d8;
         }
-
+    .logo{
+        width:100px;
+    }
         .custom-style {
             background-color: #dfe6e9 !important;
+            height: 94vh;
         }
-
-
+.btn-cont{
+    position: absolute;
+    top:40%;
+    right:0%;
+    transform: translateY(-40%);
+}
+.home-img{
+    position: absolute;
+    top:30%;
+    left:5%;
+    transform: translateY(-30%);
+}
     </style>
     {% block styles %}{% endblock %}
     <title>{% block title %}{% endblock %} | Social Network</title>
 </head>
 <body>
 
-<div class="container-fluid h-100 custom-style">
-    {% block content %}{% endblock %}
+<div class="container p-3 position-relative">
+            {% block content %}{% endblock %}
 </div>
 {% block scripts %}{% endblock %}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
