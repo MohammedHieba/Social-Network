@@ -14,3 +14,4 @@ def send_message(sender, instance: Message, created: bool, *args, **kwargs):
         message = "{title}: " + instance.message + ". tap on the following button to reply."
         redirect_to = reverse('Chats:show', kwargs={'id': instance.chat_id})
         notify_and_email(instance.by, to, title, message, redirect_to)
+

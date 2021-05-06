@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'notifications',
 
     # Third party Applications
+    'channels'
 ]
 
 # LOGOUT_REDIRECT_URL = "/book/"
@@ -92,6 +93,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'social_network.wsgi.application'
+ASGI_APPLICATION = 'social_network.asgi.application'
+
+CHANNEL_LAYERS={
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+     }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [

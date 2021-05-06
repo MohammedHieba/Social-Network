@@ -4,13 +4,20 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from notifications.api.serializers import NotificationSerializer
 from notifications.models import Notification
+from asgiref.sync import async_to_sync
+import channels.layers
 
 
 def notify(sender: User, receiver: User, title: str, message: str, redirect_to: str, group=None,
            notify_type=Notification.NotificationTypes.NOTIFY) -> Notification:
-    return Notification.objects.create(sender=sender, receiver=receiver, title=title, message=message, group=group,
+    notification =  Notification.objects.create(sender=sender, receiver=receiver, title=title, message=message, group=group,
                                        redirect_to=redirect_to, notification_type=notify_type)
+    channel_layer = channels.layers.get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "notification_1", {"type": "notification_message", 'message': NotificationSerializer(notification).data})
+    return notification
 
 
 def notify_and_email(sender: User, receiver: User, title: str, message: str, redirect_to: str,

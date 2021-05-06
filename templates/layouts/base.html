@@ -17,6 +17,7 @@
             width: 40vw;
             left: -31vw;
             cursor: auto;
+            z-index: 10000;
         }
 
         .notification-item:hover {
@@ -76,16 +77,14 @@
         </ul>
         {% if request.user.is_authenticated %}
             <ul class="nav btn btn-info ml-auto mr-4">
-                <li class="dropdown">
+                <li class="dropdown notify-drop-button">
                     <a href="#" class="text-light text-decoration-none font-weight-bold p-2"
                        data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notification
-                        <span class="badge badge-danger">2</span>
+                        <span class="badge badge-danger notification notification-number">0</span>
                     </a>
                     <ul class="dropdown-menu notify-drop">
                         <!-- notify content -->
-                        <div class="drop-content overflow-auto" style="height: 500px">
-
-                        </div>
+                        <div class="drop-content overflow-auto" style="height: 500px"></div>
                     </ul>
                 </li>
             </ul>
@@ -104,21 +103,40 @@
         crossorigin="anonymous"></script>
 {% if request.user.is_authenticated %}
     <script>
-        const renderNotification = detail => {
-            let fromNow = moment(detail.created_at).fromNow()
-            $('.drop-content').append(
-                $("<div class='row ml-3 pr-4 notification-item p-2'><div class='col-11'></div></div>")
-                    .append(
-                        $(`<a class="text-decoration-none w-100" href="${detail.formatted_redirect_to}"></a>`).append(
-                            `<div class="d-flex justify-content-between"><div class="font-weight-bold">${detail.formatted_title}</div><div>${fromNow}</div</div>`,
-                            `<div class="text-dark">${detail.formatted_message}</div>`))
-                    .add('<hr>')
-            )
+        const renderNotification = (detail, sorted = true) => {
+            const fromNow = moment(detail.created_at).fromNow()
+            const dropContent = $('.drop-content');
+            const createdElement = $("<div class='row ml-3 pr-4 notification-item p-2'><div class='col-11'></div></div>")
+                .append(
+                    $(`<a class="text-decoration-none w-100" href="${detail.formatted_redirect_to}"></a>`).append(
+                        `<div class="d-flex justify-content-between"><div class="font-weight-bold">${detail.formatted_title}</div><div>${fromNow}</div</div>`,
+                        `<div class="text-dark">${detail.formatted_message}</div>`))
+                .add('<hr>')
+            if (sorted) {
+                dropContent.append(createdElement)
+            } else {
+                dropContent.prepend(createdElement)
+            }
+
         }
         $(document).ready(function () {
+            const audio = new Audio("http://localhost:8000/media/notifications/insight-578.mp3");
+            const notificationsWebSocket = new WebSocket("ws://localhost:8000/ws/notifications/")
+            notificationsWebSocket.onmessage = event => {
+                renderNotification(JSON.parse(event.data).message, false)
+                const notificationNumber = $(".notification-number").first()
+                notificationNumber.html(Number(notificationNumber.html()) + 1)
+                audio.play();
+            }
+            notificationsWebSocket.onclose = event => alert("Connection to socket lost please refresh page.")
+
             fetch('/api/notifications')
                 .then(response => response.json())
-                .then(responseObj => responseObj.detail.forEach(function (elem) {renderNotification(elem)}))
+                .then(responseObj => responseObj.detail.forEach(function (elem) {
+                    renderNotification(elem)
+                }))
+
+            $(".notify-drop-button").click(event => $(".notification-number").html(0))
         })
     </script>
 {% endif %}
