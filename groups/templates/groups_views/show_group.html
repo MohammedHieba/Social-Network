@@ -67,11 +67,17 @@
                 <a class="btn btn-primary" href="{% url 'groups_get_members' group.id %}">Group Members</a>
             </div>
         {% endif %}
-
         <div>
-            <p>Post</p>
-            <p>Post</p>
-            <p>Post</p>
+            <form method="POST">
+                {% csrf_token %}
+                {{ group_post_form.as_p }}
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+        <div>
+            {% for post in posts %}
+                <p>{{ post }}</p>
+            {% endfor %}
         </div>
     </div>
 

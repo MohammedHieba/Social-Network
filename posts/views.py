@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView, DeleteView
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        posts = Post.objects.all()
+        posts = Post.objects.get_user_wall_posts(request.user)
         form = PostForm()
 
         context = {

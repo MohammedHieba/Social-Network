@@ -53,7 +53,9 @@ class ChatView(FormView):
 @login_required
 def chat(request, user_id):
     user = User.objects.get(id=user_id)
-    chat = Chat.objects.search_by_user(request.user, user)
-    if not chat.exists():
+    chats = Chat.objects.search_by_user(request.user, user)
+    if not chats.exists():
         chat = Chat.objects.create(first_user=request.user, second_user=user)
+    else:
+        chat = chats.first()
     return redirect('Chats:show', chat.id)

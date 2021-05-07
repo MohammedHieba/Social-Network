@@ -47,7 +47,7 @@
                             <span>Name:  </span>
                             <a href="{% url 'profile_index' friend.from_user.id %}">{{ friend.from_user.username }}</a>
                             <a class="btn btn-outline-primary float-right"
-                               href="{% url 'Chats:new_chat' user.id %}">Send Message</a>
+                               href="{% url 'Chats:new_chat' friend.from_user.id %}">Send Message</a>
                         </div>
                     </div>
                 {% endfor %}

@@ -16,7 +16,7 @@ def notify(sender: User, receiver: User, title: str, message: str, redirect_to: 
                                        redirect_to=redirect_to, notification_type=notify_type)
     channel_layer = channels.layers.get_channel_layer()
     async_to_sync(channel_layer.group_send)(
-        "notification_1", {"type": "notification_message", 'message': NotificationSerializer(notification).data})
+        f"notification_{notification.receiver.id}", {"type": "notification_message", 'message': NotificationSerializer(notification).data})
     return notification
 
 

@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 
-from .forms import CreateGroupForm, EditGroupForm, EditGroupImageForm
+from posts.models import Post
+from .forms import CreateGroupForm, EditGroupForm, EditGroupImageForm, PostGroupForm
 from .utils import *
 
 
@@ -21,8 +22,17 @@ def index(request):
 
 @login_required
 def show_group(request, group_id):
+    group_post_form = PostGroupForm(request.POST or None)
+    if group_post_form.is_valid():
+        group_post_form.add_initial_prefix({'group': group_id})
+        data = group_post_form.cleaned_data
+        data['author'] = request.user
+        data['group_id'] = group_id
+        Post.objects.create(**data)
+        return redirect('groups_show', group_id)
     group = Group.objects.get(id=group_id)
-    context = {'group': group}
+    posts = Post.objects.get_group_posts(group=group)
+    context = {'group': group, 'group_post_form': group_post_form, "posts": posts}
     return render(request, 'groups_views/show_group.html', context)
 
 
