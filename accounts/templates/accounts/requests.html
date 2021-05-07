@@ -1,0 +1,50 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+    Accounts
+{% endblock %}
+
+{% block styles %}
+    <style>
+        body {
+            background-color: #dbd8d8;
+        }
+
+        .custom-style {
+            background-color: #dfe6e9 !important;
+        }
+
+        .border-3 {
+            border-width: 3px !important;
+        }
+
+        .custom-hover-group {
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .custom-hover-group:hover {
+        {#background-color: #edf7fd !important;#} background-color: #acd0f3 !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
+        <div class="mb-4">
+            <h2>Requests:</h2>
+        {% if requests %}
+            {% for request in requests %}
+                <div class="ml-5 bg-light p-4 rounded-lg w-50 mx-center">
+                    Name: {{ request.from_user.username }}
+                    <div class="w-50 float-right">
+                        <a class="btn btn-success mr-2" href="{% url 'accept_friend' request.id %}">Accept</a>
+                        <a class="btn btn-danger" href="">Decline</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="ml-5">Sorry, Requests are empty</p>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

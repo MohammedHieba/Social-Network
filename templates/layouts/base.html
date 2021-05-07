@@ -53,22 +53,22 @@
 
 {### MODAL ###}
 <div class="modal fade" id="notificationAlert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Connection lost</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Connection to socket lost please refresh page.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Connection lost</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Connection to socket lost please refresh page.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
@@ -80,12 +80,27 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'post-list' %}"><i class="fas fa-newspaper"></i> Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'post-list' %}"><i class="fas fa-newspaper"></i> Home <span
+                        class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item {% if request.resolver_match.url_name == 'profile_index' %} active {% endif %}">
                 <a class="nav-link"
-                   href="{% url 'profile_index' request.user.id %}"><i class="fas fa-user-circle"></i> {{ request.user.username }}</a>
+                   href="{% url 'profile_index' request.user.id %}"><i
+                        class="fas fa-user-circle"></i> {{ request.user.username }}</a>
             </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user-friends"></i> Friends
+            </a>
+            <div class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item "
+                   href="{% url 'friend_requests' %}"><i class="fas fa-people-arrows"></i> Friend Requests</a>
+                <a class="dropdown-item "
+                   href="{% url 'get_friends' %}"><i class="fas fa-user-friends"></i> My Friends</a>
+            </div>
+            </li>
+
             <li class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                 <a class="nav-link"
                    href="{% url 'Chats:index' %}"><i class="fas fa-comment-dots"></i> Chats</a>

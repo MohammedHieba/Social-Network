@@ -1,12 +1,14 @@
 {% extends 'layouts/base.html' %}
 
 {% block title %}
-Accounts
+    Accounts
 {% endblock %}
+
+
 
 {% block styles %}
     <style>
-            body {
+        body {
             background-color: #dbd8d8;
         }
 
@@ -17,20 +19,39 @@ Accounts
         .border-3 {
             border-width: 3px !important;
         }
-            .custom-hover-group{
-        transition: background-color 0.5s ease-in-out;
-    }
-    .custom-hover-group:hover{
-        {#background-color: #edf7fd !important;#}
-        background-color: #acd0f3 !important;
-    }
+
+        .custom-hover-friends {
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .custom-hover-friends:hover {
+        {#background-color: #edf7fd !important;#} background-color: #acd0f3 !important;
+        }
     </style>
 {% endblock %}
 
 {% block content %}
     <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
-        <div class="mb-4 d-flex justify-content-between">
+        <div class="mb-4">
             <h2>Friends:</h2>
+            {% if friends %}
+                {% for friend in friends %}
+                    <div class="bg-light w-75 p-5 rounded-lg d-flex custom-hover-friends">
+                        <div class="w-50 text-center pt-0">
+                            <img class="rounded-circle border border-primary border-3" width="100" height="100"
+                                 src="{{ friend.from_user.profile.profile_image.url }}" alt="image">
+                        </div>
+                        <div class="w-50 pt-4">
+                            <span>Name:  </span>
+                            <a href="{% url 'profile_index' friend.from_user.id %}">{{ friend.from_user.username }}</a>
+                            <a class="btn btn-outline-primary float-right"
+                               href="{% url 'Chats:new_chat' user.id %}">Send Message</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="p-2 pl-5 ml-5 bg-light rounded-lg w-25">Sorry, no Friends yet</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
