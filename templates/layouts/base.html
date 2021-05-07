@@ -89,14 +89,17 @@
                         class="fas fa-user-circle"></i> {{ request.user.username }}</a>
             </li>
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            <a class="nav-link dropdown-toggle
+                    {% if request.resolver_match.url_name == 'friend_requests' %} active {% endif %}
+                    {% if request.resolver_match.url_name == 'get_friends' %} active {% endif %}"
+               href="#" id="navbarDropdownMenuLink" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user-friends"></i> Friends
             </a>
             <div class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item "
+                <a class="dropdown-item {% if request.resolver_match.url_name == 'friend_requests' %} active {% endif %}"
                    href="{% url 'friend_requests' %}"><i class="fas fa-people-arrows"></i> Friend Requests</a>
-                <a class="dropdown-item "
+                <a class="dropdown-item {% if request.resolver_match.url_name == 'get_friends' %} active {% endif %}"
                    href="{% url 'get_friends' %}"><i class="fas fa-user-friends"></i> My Friends</a>
             </div>
             </li>
