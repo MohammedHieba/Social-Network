@@ -47,5 +47,3 @@ def cancel_request(request, request_id, user_id):
     friendship.delete()
     print(user_id)
     return redirect('profile_index', user_id)
-    # context = {'friends': friends}
-    # return render(request, 'accounts/index.html', context)

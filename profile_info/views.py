@@ -1,13 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from accounts.models import User
-from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
 from .forms import ProfileForm, SignUpForm, EditProfileForm, EditPassForm, ProfileImage
-from .models import Profile
-from .filter import UserFilter
 from .utils import get_index_context
 
 

@@ -1,10 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from accounts.models import User
-from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
 
 from posts.models import Post
 from .forms import CreateGroupForm, EditGroupForm, EditGroupImageForm, PostGroupForm
