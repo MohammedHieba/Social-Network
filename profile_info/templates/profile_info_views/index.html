@@ -46,7 +46,7 @@
                                 <a class="btn btn-outline-danger btn-block"
                                     href="{% url 'cancel_friend_request' friend.id user.id %}">
                                     Cancel Request
-{#                                </a>#}
+                                </a>
                         {% elif not exists %}
                             <a class="btn btn-outline-success btn-block"
                                href="{% url 'send_friend_request' user.id %}">Add Friend</a>
