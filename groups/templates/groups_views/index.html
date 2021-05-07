@@ -57,7 +57,7 @@
             </div>
         </div>
         {% for group in groups %}
-            <div class="card mb-3 mx-auto custom-hover-group" onclick="location.href='{% url 'groups_show' group.id %}';">
+            <div class="card mb-3 mx-auto custom-hover-group">
                 <div class="row">
                     <div class="col-md-4 w-50 m-auto text-center">
                         <img src="{{ group.group_image.url }}" class="rounded-circle border border-primary border-3"
