@@ -109,6 +109,51 @@
                 </form>
             </div>
         </div>
+        <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
+        <div class="w-75 mx-auto text-center">
+            <h2>Posts</h2>
+        </div>
+        {% for post in post_list %}
+            <div class="bg-light rounded-lg py-4 my-4 custom-hover-list">
+                <div class="row justify-content-center mt-3">
+                    <div class="col-3 text-center">
+                        <img class="rounded-circle border border-primary border-3"
+                             src="{{ post.author.profile.profile_image.url }}" width="100" height="100" alt="image">
+                    </div>
+                    <div class="col position-relative">
+                        <h4 class="text-primary"><strong><i class="fas fa-at"></i>{{ post.author }}</strong></h4>
+                        <div class="d-flex">
+                            <i class="far fa-newspaper"></i>&nbsp
+                            <small class="text-muted">
+                                {{ post.created_at | timesince }} ago <i class="fas fa-clock fa-xs"></i>
+                            </small>
+                        </div>
+
+                        <p class="text-break">{{ post.body }}</p>
+
+                        <a class="stretched-link" href="{% url 'post-detail' post.pk %}"></a>
+                    </div>
+                    <div class="d-flex flex-row mr-4">
+                        <form method="POST" action="{% url 'like' post.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button style="background-color: transparent; border: none; box-shadow: none;"
+                                    type="submit"><i
+                                    class="fas fa-thumbs-up"></i> <span>{{ post.likes.all.count }}</span></button>
+                        </form>
+
+                        <form method="POST" action="{% url 'dislike' post.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button style="background-color: transparent; border: none; box-shadow: none;"
+                                    type="submit"><i
+                                    class="fas fa-thumbs-down"></i> <span>{{ post.dislikes.all.count }}</span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
     </div>
 
 {% endblock %}
