@@ -1,24 +1,16 @@
-from django.contrib import messages
 from django.http import HttpResponseRedirect
 
 from .models import User, Friendship
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
-
-
-# return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def index(request):
-    print(request.user)
     friends = Friendship.objects.filter(to_user=request.user, approved=True)
     context = {'friends': friends}
     return render(request, 'accounts/index.html', context)
 
 
 def friend_request(request, receiver_id):
-    print(receiver_id)
     receiver = User.objects.get(id=receiver_id)
     if not Friendship.objects.filter(from_user=request.user, to_user=receiver).exists():
         # doesnt exists
@@ -38,12 +30,13 @@ def friend_requests(request):
 
 def accept_friend(request, request_id):
     if Friendship.objects.filter(id=request_id).exists():
-        request = Friendship.objects.filter(id=request_id).first()
-        request.approved = True
-        request.save()
+        request_to = Friendship.objects.filter(id=request_id).first()
+        friendship = Friendship(from_user=request.user, to_user=request_to.from_user)
+        friendship.save()
+        request1 = Friendship.objects.filter(id=request_id).first()
+        friendship = Friendship.objects.filter(id=friendship.id).first()
+        request1.approved = True
+        friendship.approved = True
+        request1.save()
+        friendship.save()
     return redirect('friend_requests')
-
-
-def get_friends(request):
-    user = request.user.id
-    print(user)

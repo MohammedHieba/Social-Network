@@ -35,8 +35,20 @@
                     </div>
                 {% else %}
                     <div class="w-75 mx-auto mt-5">
-                        <a class="btn btn-outline-success btn-block"
-                           href="{% url 'send_friend_request' user.id %}">Add Friend</a>
+                        {% if friend.approved %}
+                            <button class="btn btn-success btn-block"><i class="fas fa-people-arrows"></i> Already
+                                Friends
+                            </button>
+                        {% elif exists and not friend.approved %}
+                                <button class="btn btn-outline-warning btn-block">
+                                    Request Pending
+                                </button>
+                        {% elif not exists %}
+                            <a class="btn btn-outline-success btn-block"
+                               href="{% url 'send_friend_request' user.id %}">Add Friend</a>
+                        {% endif %}
+
+
                         <a class="btn btn-outline-info btn-block"
                            href="{% url 'Chats:new_chat' user.id %}">Send Message</a>
                     </div>
