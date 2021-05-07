@@ -13,20 +13,36 @@
         .border-3 {
             border-width: 3px !important;
         }
+
+        .custom-hover-group {
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .custom-hover-group:hover {
+            background-color: #acd0f3 !important;
+            cursor: pointer;
+        }
     </style>
 {% endblock %}
 
 {% block title %}
-    My Groups
+    My Created Groups
 {% endblock %}
 
 {% block content %}
     <div class="w-75 mx-auto my-4 p-5 rounded-lg custom-style">
-        <div class="mb-4 d-flex justify-content-between">
+        <div class="mb-4">
             <h2>My Created Groups:</h2>
         </div>
+    <div class="my-4">
+        <a href="{% url 'groups_create' %}" class="btn btn-primary mr-2">
+                    <i class="fas fa-plus-circle"></i>
+                    Create Group
+                </a>
+    </div>
         {% for group in groups %}
-            <div class="card mb-3 mx-auto">
+            <div class="card mb-3 mx-auto custom-hover-group"
+                 onclick="location.href='{% url 'groups_show' group.id %}';">
                 <div class="row py-4">
                     <div class="col-md-4 w-50 m-auto text-center">
                         <img src="{{ group.group_image.url }}" class="rounded-circle border border-primary border-3"
@@ -34,9 +50,11 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h4 class="card-title">Name: <a href="{% url 'groups_show' group.id %}">{{ group.name }}</a></h4>
+                            <h4 class="card-title">Name: <a href="{% url 'groups_show' group.id %}">{{ group.name }}</a>
+                            </h4>
                             <p class="card-text">Description: {{ group.description }}</p>
-                            <p class="card-text"><small class="text-muted">Created at: {{ group.created_at }}</small></p>
+                            <p class="card-text"><small class="text-muted">Created
+                                on: {{ group.created_at | date:"d-M-y" }}</small></p>
                             <a class="btn btn-info" href="{% url 'groups_get_requests' group.id %}">Show Requests</a>
                             <a class="btn btn-primary" href="{% url 'groups_get_members' group.id %}">Show Members</a>
                             <a class="btn btn-warning" href="{% url 'groups_edit' group.id %}">Edit group</a>
@@ -48,7 +66,8 @@
                             </button>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="groupId-{{ group.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            <div class="modal fade" id="groupId-{{ group.id }}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -59,12 +78,14 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure you want to <strong><p class="text-danger d-inline">delete {{ group.name }}</p></strong>  ?
+                                            Are you sure you want to <strong><p class="text-danger d-inline">
+                                            delete {{ group.name }}</p></strong> ?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
                                             </button>
-                                            <a class="btn btn-danger" href="{% url 'groups_delete' group.id %}">Yes, Delete</a>
+                                            <a class="btn btn-danger" href="{% url 'groups_delete' group.id %}">Yes,
+                                                Delete</a>
                                         </div>
                                     </div>
                                 </div>

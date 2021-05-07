@@ -13,13 +13,15 @@
         .border-3 {
             border-width: 3px !important;
         }
-            .custom-hover-group{
-        transition: background-color 0.5s ease-in-out;
-    }
-    .custom-hover-group:hover{
-        {#background-color: #edf7fd !important;#}
-        background-color: #acd0f3 !important;
-    }
+
+        .custom-hover-group {
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .custom-hover-group:hover {
+            background-color: #acd0f3 !important;
+            cursor: pointer;
+        }
     </style>
 {% endblock %}
 
@@ -55,7 +57,7 @@
             </div>
         </div>
         {% for group in groups %}
-            <div class="card mb-3 mx-auto custom-hover-group">
+            <div class="card mb-3 mx-auto custom-hover-group" onclick="location.href='{% url 'groups_show' group.id %}';">
                 <div class="row">
                     <div class="col-md-4 w-50 m-auto text-center">
                         <img src="{{ group.group_image.url }}" class="rounded-circle border border-primary border-3"
@@ -67,12 +69,14 @@
                             <h4 class="card-title">Name: {{ group.name }}</h4>
                             <h6 class="card-title">Owner: {{ group.owner }}</h6>
                             <p class="card-text">{{ group.description }}</p>
-                            <p class="card-text"><small class="text-muted">{{ group.created_at }}</small></p>
+                            <p class="card-text"><small class="text-muted">Created
+                                on: {{ group.created_at | date:"d-M-y" }}</small></p>
 
                             {% if group.id in memberships %}
 
                                 {% if group.id in joined_groups_id %}
-                                    <a class="btn btn-primary" href="{% url 'groups_show' group.id %}">Show Group <i class="far fa-eye"></i></a>
+                                    <a class="btn btn-primary" href="{% url 'groups_show' group.id %}">Show Group <i
+                                            class="far fa-eye"></i></a>
                                 {% else %}
                                     <button class="btn btn-outline-secondary">Pending Request</button>
                                     <a class="btn btn-outline-warning"
