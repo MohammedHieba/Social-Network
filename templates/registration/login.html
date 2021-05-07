@@ -6,7 +6,7 @@ Login
 {% endblock %}
 
 {% block content %}
-<div class="container p-4 mt-4 bg-light custom-style rounded-lg">
+<div class="container p-5 mt-4 bg-light custom-style rounded-lg">
     <form action="{% url "login" %}" method="POST" class="m-auto">
         {% csrf_token %}
         <h2>Login:</h2>

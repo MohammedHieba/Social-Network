@@ -40,3 +40,12 @@ def accept_friend(request, request_id):
         request1.save()
         friendship.save()
     return redirect('friend_requests')
+
+
+def cancel_request(request, request_id, user_id):
+    friendship = Friendship.objects.filter(id=request_id).first()
+    friendship.delete()
+    print(user_id)
+    return redirect('profile_index', user_id)
+    # context = {'friends': friends}
+    # return render(request, 'accounts/index.html', context)
