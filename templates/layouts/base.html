@@ -185,7 +185,7 @@
             const notificationsWebSocket = new WebSocket(`ws://${window.location.host}/ws/notifications/`)
             notificationsWebSocket.onmessage = event => {
                 renderNotification(JSON.parse(event.data).message, false)
-                const audio = new Audio("http://localhost:8000/media/notifications/insight-578.mp3");
+                const audio = new Audio("{% static 'notifications/insight-578.mp3' %}");
                 audio.play();
             }
             notificationsWebSocket.onclose = event => $("#notificationAlert").modal('show');
