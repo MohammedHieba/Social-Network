@@ -1,36 +1,42 @@
-
 {% extends 'layouts/plain.html' %}
 {% load static %}
 
 {% block title %}
-Home
+    Home
 {% endblock %}
-
+{% block styles %}
+    <style>
+        .custom-style {
+            background-color: #dfe6e9 !important;
+            height: 94vh;
+        }
+    </style>
+{% endblock %}
 {% block content %}
 
-<div class=" custom-style rounded-lg">
-    <div class="col-md-7 home-img">
-        <div>
-            <img src="{% static 'images' %}/social.png"  class="w-75" alt="Background">
-        </div>
-    </div>
-    <div class="col-md-5 btn-cont">
-        <div class="bg-light p-5 text-center w-75 rounded-lg">
-            <div class="">
-                <img src="{% static 'images' %}/logo2.jpg" class="logo w-50" alt="Logo">
+    <div class="custom-style rounded-lg">
+        <div class="col-md-7 home-img">
+            <div>
+                <img src="{% static 'images' %}/social.png" class="w-75" alt="Background">
             </div>
-            <div class=" m-4">
-               <div class="">
-                    <a class="btn-block btn my-2  btn-primary" href="{% url 'login' %}">Login</a>
-               </div>
-                <div>
-                    <a class="btn-block btn my-2 btn-primary" href="{% url 'signup' %}">Sign Up</a>
+        </div>
+        <div class="col-md-5 btn-cont">
+            <div class="bg-light p-4 text-center w-75 rounded-lg">
+                <div class="">
+                    <img src="{% static 'images' %}/logo2.jpg" class="logo w-50" alt="Logo">
                 </div>
+                <div class=" m-4">
+                    <div class="">
+                        <a class="btn-block btn my-2  btn-primary" href="{% url 'login' %}">Login</a>
+                    </div>
+                    <div>
+                        <a class="btn-block btn my-2 btn-success" href="{% url 'signup' %}">Sign Up</a>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 {% endblock %}

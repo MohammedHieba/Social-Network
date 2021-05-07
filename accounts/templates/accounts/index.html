@@ -25,7 +25,8 @@
         }
 
         .custom-hover-friends:hover {
-        {#background-color: #edf7fd !important;#} background-color: #acd0f3 !important;
+            cursor: pointer;
+            background-color: #acd0f3 !important;
         }
     </style>
 {% endblock %}
@@ -36,8 +37,9 @@
             <h2>Friends:</h2>
             {% if friends %}
                 {% for friend in friends %}
-                    <div class="bg-light w-75 p-5 rounded-lg d-flex custom-hover-friends">
-                        <div class="w-50 text-center pt-0">
+                    <div class="bg-light w-75 mx-auto p-5 rounded-lg d-flex custom-hover-friends"
+                    onclick="location.href='{% url 'profile_index' friend.from_user.id %}';">
+                        <div class="w-50 text-center">
                             <img class="rounded-circle border border-primary border-3" width="100" height="100"
                                  src="{{ friend.from_user.profile.profile_image.url }}" alt="image">
                         </div>
